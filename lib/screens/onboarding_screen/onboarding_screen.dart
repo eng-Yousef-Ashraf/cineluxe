@@ -88,7 +88,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
 
           return Stack(
             children: [
-              /// الصورة
               Positioned.fill(
                 child: Image.asset(
                   item["image"]!,
@@ -112,7 +111,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 ),
               ),
 
-              /// الكارد
+
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(

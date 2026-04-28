@@ -1,6 +1,5 @@
 import 'package:cineluxe/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:flutter/material.dart';
- // عدل المسار حسب عندك
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -103,7 +102,7 @@ class _SplashScreenState extends State<SplashScreen>
       brandController.forward();
     });
 
-    // ✅ Navigation بعد انتهاء الأنيميشن
+    //  Navigation
     Future.delayed(const Duration(milliseconds: 2800), () {
       if (!mounted) return;
       Navigator.pushReplacement(
