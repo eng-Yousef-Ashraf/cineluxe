@@ -37,6 +37,8 @@ dependencies:
   flutter_launcher_icons: ^0.14.4
   google_fonts: ^8.0.2
   easy_localization: ^3.0.8
+  flutter_native_splash: ^2.4.7
+  introduction_screen: ^4.0.0
 
 dev_dependencies:
   flutter_test:

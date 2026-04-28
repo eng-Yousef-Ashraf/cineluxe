@@ -6,10 +6,14 @@ import '../utils/app_sizes.dart';
 class CustomizedElevatedButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Widget child;
+  final Color? backgroundColor ;
+  final bool isOutlined ;
   const CustomizedElevatedButton({
     super.key,
     required this.onPressed,
     required this.child,
+    this.backgroundColor,
+    this.isOutlined = false
   });
 
   @override
@@ -18,9 +22,19 @@ class CustomizedElevatedButton extends StatelessWidget {
     var width = context.width;
     return ElevatedButton(
       style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(AppColors.yellowColor),
+        backgroundColor: WidgetStateProperty.all(
+          isOutlined ? Colors.transparent :
+          (backgroundColor ?? AppColors.yellowColor),),
         shape: WidgetStateProperty.all(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+            side: isOutlined
+                ? const BorderSide(
+              color: AppColors.yellowColor,
+              width: 1.5,
+            )
+                : BorderSide.none,
+          ),
         ),
         elevation: WidgetStateProperty.all(0),
         padding: WidgetStateProperty.all(

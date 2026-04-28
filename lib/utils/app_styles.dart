@@ -44,4 +44,34 @@ class AppStyles {
     fontWeight: FontWeight.w400,
     color: AppColors.yellowColor,
   );
+
+  static final TextStyle medium36W400 = GoogleFonts.roboto(
+    fontSize: 36,
+    fontWeight: FontWeight.w400,
+    color: AppColors.whiteColor,
+  );
+
+
+  static final TextStyle regular20W400 = GoogleFonts.roboto(
+    fontSize: 20,
+    color: AppColors.greyColor,
+  );
+
+  static final TextStyle regular20WhiteColorW400 = GoogleFonts.roboto(
+    fontSize: 20,
+    color: AppColors.whiteColor,
+  );
+
+
+  static final TextStyle regular24W400 = GoogleFonts.roboto(
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+    color: AppColors.whiteColor,
+  );
+
+  static final TextStyle semi20W400 = GoogleFonts.roboto(
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+    color: AppColors.bgColor,
+  );
 }
