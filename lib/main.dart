@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       title: 'cineluxe',
       debugShowCheckedModeBanner: false,
 
-      home: const SplashScreen(),
+      initialRoute: AppRoutes.splashScreen,
 
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
@@ -47,6 +47,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.loginScreen: (context) => const Login(),
         AppRoutes.forgetPasswordScreen: (context) => const ForgetPassword(),
         AppRoutes.registerScreen: (context) => const Register(),
+        AppRoutes.splashScreen: (context) => const SplashScreen(),
         AppRoutes.onboardingScreen: (context) => const OnBoardingPage(),
       },
     );
