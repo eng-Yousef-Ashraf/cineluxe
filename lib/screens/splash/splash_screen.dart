@@ -1,5 +1,6 @@
 import 'package:cineluxe/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -22,6 +23,7 @@ class _SplashScreenState extends State<SplashScreen>
   late Animation<double> brandOpacity;
   late Animation<Offset> brandMove;
   late Animation<double> brandScale;
+  final AudioPlayer player = AudioPlayer();
 
   String displayedText = "";
   final String fullText = "Cineluxe";
@@ -32,39 +34,30 @@ class _SplashScreenState extends State<SplashScreen>
 
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1800),
+      duration: const Duration(milliseconds: 1300),
     );
 
     brandController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 900),
+      duration: const Duration(milliseconds: 600),
     );
 
     triangleMove = Tween<Offset>(
-      begin: const Offset(-1.5, 0),
+      begin: const Offset(-2.5, 0),
       end: Offset.zero,
-    ).animate(
-      CurvedAnimation(parent: controller, curve: Curves.easeOutCubic),
-    );
+    ).animate(CurvedAnimation(parent: controller, curve: Curves.easeOutCubic));
 
     triangleScale = Tween<double>(
-      begin: 0.6,
+      begin: 0.4,
       end: 1,
-    ).animate(
-      CurvedAnimation(parent: controller, curve: Curves.easeOutBack),
-    );
+    ).animate(CurvedAnimation(parent: controller, curve: Curves.easeOutBack));
 
     triangleOpacity = Tween<double>(
       begin: 0,
       end: 1,
-    ).animate(
-      CurvedAnimation(parent: controller, curve: Curves.easeIn),
-    );
+    ).animate(CurvedAnimation(parent: controller, curve: Curves.easeIn));
 
-    textOpacity = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(
+    textOpacity = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: controller,
         curve: const Interval(0.6, 1, curve: Curves.easeIn),
@@ -74,36 +67,32 @@ class _SplashScreenState extends State<SplashScreen>
     brandOpacity = Tween<double>(
       begin: 0,
       end: 1,
-    ).animate(
-      CurvedAnimation(parent: brandController, curve: Curves.easeOut),
-    );
+    ).animate(CurvedAnimation(parent: brandController, curve: Curves.easeOut));
 
-    brandMove = Tween<Offset>(
-      begin: const Offset(0, 0.5),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(parent: brandController, curve: Curves.easeOutCubic),
-    );
+    brandMove = Tween<Offset>(begin: const Offset(0, 0.5), end: Offset.zero)
+        .animate(
+          CurvedAnimation(parent: brandController, curve: Curves.easeOutExpo),
+        );
 
-    brandScale = Tween<double>(
-      begin: 0.8,
-      end: 1,
-    ).animate(
+    brandScale = Tween<double>(begin: 0.8, end: 1).animate(
       CurvedAnimation(parent: brandController, curve: Curves.easeOutBack),
     );
 
     controller.forward();
+    Future.delayed(const Duration(milliseconds: 100), () async {
+      await player.play(AssetSource('sounds/splash_sound.mp3'));
+    });
 
-    Future.delayed(const Duration(milliseconds: 1200), () {
+    Future.delayed(const Duration(milliseconds: 500), () {
       typeWriter();
     });
 
-    Future.delayed(const Duration(milliseconds: 1400), () {
+    Future.delayed(const Duration(milliseconds: 700), () {
       brandController.forward();
     });
 
     //  Navigation
-    Future.delayed(const Duration(milliseconds: 2800), () {
+    Future.delayed(const Duration(milliseconds: 1800), () {
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
@@ -114,7 +103,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   void typeWriter() async {
     for (int i = 0; i < fullText.length; i++) {
-      await Future.delayed(const Duration(milliseconds: 80));
+      await Future.delayed(const Duration(milliseconds: 40));
       if (!mounted) return;
       setState(() {
         displayedText += fullText[i];
@@ -126,6 +115,7 @@ class _SplashScreenState extends State<SplashScreen>
   void dispose() {
     controller.dispose();
     brandController.dispose();
+    player.dispose();
     super.dispose();
   }
 
@@ -144,14 +134,17 @@ class _SplashScreenState extends State<SplashScreen>
                 Stack(
                   alignment: Alignment.center,
                   children: [
-                    Container(
-                      width: 140,
-                      height: 140,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: const Color(0xFFFFC107),
-                          width: 3,
+                    FadeTransition(
+                      opacity: triangleOpacity,
+                      child: Container(
+                        width: 140,
+                        height: 140,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: const Color(0xFFFFC107),
+                            width: 4,
+                          ),
                         ),
                       ),
                     ),
@@ -163,7 +156,7 @@ class _SplashScreenState extends State<SplashScreen>
                         child: ScaleTransition(
                           scale: triangleScale,
                           child: CustomPaint(
-                            size: const Size(100, 100),
+                            size: const Size(90, 90),
                             painter: TriangleOutlinePainter(),
                           ),
                         ),
@@ -225,17 +218,19 @@ class _SplashScreenState extends State<SplashScreen>
 
 class TriangleOutlinePainter extends CustomPainter {
   @override
+  @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = const Color(0xFFFFC107)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 12
-      ..strokeJoin = StrokeJoin.round;
+      ..strokeWidth = 10
+      ..strokeJoin = StrokeJoin.round
+      ..strokeCap = StrokeCap.round;
 
     final path = Path();
-    path.moveTo(0, 0);
-    path.lineTo(size.width, size.height / 2);
-    path.lineTo(0, size.height);
+    path.moveTo(size.width * 0.2, size.height * 0.15); // top
+    path.lineTo(size.width * 0.85, size.height * 0.5); // right
+    path.lineTo(size.width * 0.2, size.height * 0.85); // bottom
     path.close();
 
     canvas.drawPath(path, paint);
