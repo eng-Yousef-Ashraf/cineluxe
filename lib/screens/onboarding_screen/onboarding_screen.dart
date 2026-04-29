@@ -22,31 +22,31 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       "image": "assets/images/OnBoarding1.png",
       "title": "Find Your Next Favorite Movie Here",
       "body":
-      "Get access to a huge library of movies to suit all tastes. You will surely like it.",
+          "Get access to a huge library of movies to suit all tastes. You will surely like it.",
     },
     {
       "image": "assets/images/OnBoarding2.png",
       "title": "Discover Movies",
       "body":
-      "Explore a vast collection of movies in all qualities and genres. Find your next favorite film with ease.",
+          "Explore a vast collection of movies in all qualities and genres. Find your next favorite film with ease.",
     },
     {
       "image": "assets/images/OnBoarding3.png",
       "title": "Explore All Genres",
       "body":
-      "Discover movies from every genre, in all available qualities. Find something new and exciting to watch every day.",
+          "Discover movies from every genre, in all available qualities. Find something new and exciting to watch every day.",
     },
     {
       "image": "assets/images/OnBoarding4.png",
-      "title": "Create Watchlists",
+      "title": "Create Watchlist",
       "body":
-      "Save movies to your watchlist to keep track of what you want to watch next. Enjoy films in various qualities and genres.",
+          "Save movies to your watchlist to keep track of what you want to watch next. Enjoy films in various qualities and genres.",
     },
     {
       "image": "assets/images/OnBoarding5.png",
       "title": "Rate, Review, and Learn",
       "body":
-      "Share your thoughts on the movies you've watched. Dive deep into film details and help others discover great movies with your reviews.",
+          "Share your thoughts on the movies you've watched. Dive deep into film details and help others discover great movies with your reviews.",
     },
     {
       "image": "assets/images/OnBoarding6.png",
@@ -80,6 +80,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       body: PageView.builder(
         controller: _controller,
         itemCount: data.length,
+        physics: NeverScrollableScrollPhysics(),
         onPageChanged: (index) {
           setState(() => currentPage = index);
         },
@@ -89,10 +90,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           return Stack(
             children: [
               Positioned.fill(
-                child: Image.asset(
-                  item["image"]!,
-                  fit: BoxFit.cover,
-                ),
+                child: Image.asset(item["image"]!, fit: BoxFit.cover),
               ),
 
               /// gradient
@@ -102,7 +100,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     gradient: LinearGradient(
                       colors: [
                         Colors.transparent,
-                        Colors.black.withOpacity(0.9),
+                        Colors.black.withValues(alpha: 0.9),
                       ],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
@@ -110,7 +108,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   ),
                 ),
               ),
-
 
               Align(
                 alignment: Alignment.bottomCenter,
@@ -121,9 +118,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   ),
                   padding: EdgeInsets.all(width * 0.05),
                   decoration: BoxDecoration(
-                    color: isFirst
-                        ? Colors.transparent
-                        : Colors.black,
+                    color: isFirst ? Colors.transparent : Colors.black,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
@@ -194,8 +189,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                             isOutlined: true,
                             onPressed: () {
                               _controller.previousPage(
-                                duration:
-                                const Duration(milliseconds: 300),
+                                duration: const Duration(milliseconds: 300),
                                 curve: Curves.easeInOut,
                               );
                             },
