@@ -19,6 +19,28 @@ class AppStyles {
     fontWeight: FontWeight.w400,
     color: AppColors.textFormFieldBg,
   );
+
+
+  static final TextStyle black20Bold = GoogleFonts.roboto(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: AppColors.textFormFieldBg,
+  );
+
+
+  static final TextStyle white20Bold = GoogleFonts.roboto(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: AppColors.whiteColor,
+  );
+
+
+  static final TextStyle yellow20Bold = GoogleFonts.roboto(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: AppColors.yellowColor,
+  );
+
   static final TextStyle white14W400 = GoogleFonts.roboto(
     fontSize: 14,
     fontWeight: FontWeight.w400,

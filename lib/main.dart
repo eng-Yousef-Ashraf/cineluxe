@@ -3,6 +3,7 @@ import 'package:cineluxe/screens/login_screen/ui/login.dart';
 import 'package:cineluxe/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:cineluxe/screens/register_screen/ui/register.dart';
 import 'package:cineluxe/screens/splash/splash_screen.dart';
+import 'package:cineluxe/screens/update_profile_screen/Profile.dart';
 import 'package:cineluxe/utils/app_routes.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.registerScreen: (context) => const Register(),
         AppRoutes.splashScreen: (context) => const SplashScreen(),
         AppRoutes.onboardingScreen: (context) => const OnBoardingPage(),
+        AppRoutes.updateProfileScreen: (context) =>  UpdateProfileScreen(),
       },
     );
   }
