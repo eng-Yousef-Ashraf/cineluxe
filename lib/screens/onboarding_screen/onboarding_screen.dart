@@ -172,10 +172,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                                 : isLast
                                 ? "Finish"
                                 : "Next",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                            ),
+                            style: AppStyles.black20Bold
                           ),
                         ),
                       ),
@@ -193,12 +190,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                                 curve: Curves.easeInOut,
                               );
                             },
-                            child: const Text(
+                            child: Text(
                               "Back",
-                              style: TextStyle(
-                                color: AppColors.yellowColor,
-                                fontSize: 16,
-                              ),
+                              style: AppStyles.yellow20Bold
                             ),
                           ),
                         ),

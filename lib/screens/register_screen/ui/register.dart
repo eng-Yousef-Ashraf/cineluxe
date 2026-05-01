@@ -1,3 +1,4 @@
+import 'package:cineluxe/utils/app_routes.dart';
 import 'package:cineluxe/widgets/customized_text_form_field.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -155,6 +156,7 @@ class _RegisterState extends State<Register> {
                       child: CustomizedElevatedButton(
                         onPressed: () {
                           //todo: authenticate before register
+                          Navigator.pushNamed(context, AppRoutes.updateProfileScreen);
                         },
                         child: Text(
                           'create_account'.tr(),

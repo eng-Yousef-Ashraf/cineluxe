@@ -1,6 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cineluxe/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
