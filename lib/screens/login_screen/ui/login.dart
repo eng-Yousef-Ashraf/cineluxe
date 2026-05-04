@@ -36,14 +36,14 @@ class _LoginState extends State<Login> {
                 CustomizedTextFormField(
                   textInputAction: TextInputAction.next,
                   hintText: 'email'.tr(),
-                  prefixIcon: Image.asset(AppAssets.emailLogo),
+                  prefixIcon: Image.asset(AppAssets.emailLogo,width: width*0.02,),
                   keyboardType: TextInputType.emailAddress,
                 ),
                 SizedBox(height: height * 0.03),
                 CustomizedTextFormField(
                   textInputAction: TextInputAction.done,
                   hintText: 'password'.tr(),
-                  prefixIcon: Image.asset(AppAssets.passwordLogo),
+                  prefixIcon: Image.asset(AppAssets.passwordLogo,width: width*0.02,),
                   keyboardType: TextInputType.visiblePassword,
                   suffixIcon: IconButton(
                     onPressed: () {
