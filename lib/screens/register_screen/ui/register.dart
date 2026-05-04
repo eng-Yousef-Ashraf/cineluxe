@@ -100,20 +100,20 @@ class _RegisterState extends State<Register> {
                     CustomizedTextFormField(
                       textInputAction: TextInputAction.next,
                       hintText: 'name'.tr(),
-                      prefixIcon: Image.asset(AppAssets.nameLogo),
+                      prefixIcon: Image.asset(AppAssets.nameLogo,width: width*0.02,),
                     ),
                     SizedBox(height: height * 0.03),
                     CustomizedTextFormField(
                       textInputAction: TextInputAction.next,
                       hintText: 'email'.tr(),
-                      prefixIcon: Image.asset(AppAssets.emailLogo),
+                      prefixIcon: Image.asset(AppAssets.emailLogo,width: width*0.02,),
                       keyboardType: TextInputType.emailAddress,
                     ),
                     SizedBox(height: height * 0.03),
                     CustomizedTextFormField(
                       textInputAction: TextInputAction.next,
                       hintText: 'password'.tr(),
-                      prefixIcon: Image.asset(AppAssets.passwordLogo),
+                      prefixIcon: Image.asset(AppAssets.passwordLogo,width: width*0.02,),
                       keyboardType: TextInputType.visiblePassword,
                       suffixIcon: IconButton(
                         onPressed: () {
@@ -130,7 +130,7 @@ class _RegisterState extends State<Register> {
                     CustomizedTextFormField(
                       textInputAction: TextInputAction.next,
                       hintText: 'confirm_password'.tr(),
-                      prefixIcon: Image.asset(AppAssets.passwordLogo),
+                      prefixIcon: Image.asset(AppAssets.passwordLogo,width: width*0.02,),
                       keyboardType: TextInputType.visiblePassword,
                       suffixIcon: IconButton(
                         onPressed: () {
@@ -147,7 +147,7 @@ class _RegisterState extends State<Register> {
                     CustomizedTextFormField(
                       textInputAction: TextInputAction.done,
                       hintText: 'phone'.tr(),
-                      prefixIcon: Image.asset(AppAssets.phoneLogo),
+                      prefixIcon: Image.asset(AppAssets.phoneLogo,width: width*0.02,),
                       keyboardType: TextInputType.phone,
                     ),
                     SizedBox(height: height * 0.03),
