@@ -1,30 +1,44 @@
-import 'package:cineluxe/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-
-import '../utils/app_sizes.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:cineluxe/utils/app_colors.dart';
+import 'package:cineluxe/utils/app_sizes.dart';
 
 class CustomizedElevatedButton extends StatelessWidget {
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Widget child;
-  final Color? backgroundColor ;
-  final bool isOutlined ;
+  final Color? backgroundColor;
+  final bool isOutlined;
+  final bool isLoading;
+
   const CustomizedElevatedButton({
     super.key,
     required this.onPressed,
     required this.child,
     this.backgroundColor,
-    this.isOutlined = false
+    this.isOutlined = false,
+    this.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    var height = context.height;
-    var width = context.width;
+    final height = context.height;
+    final width = context.width;
+
     return ElevatedButton(
+      onPressed: isLoading ? null : onPressed,
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.all(
-          isOutlined ? Colors.transparent :
-          (backgroundColor ?? AppColors.yellowColor),),
+          isOutlined
+              ? Colors.transparent
+              : (backgroundColor ?? AppColors.yellowColor),
+        ),
+        elevation: WidgetStateProperty.all(0),
+        padding: WidgetStateProperty.all(
+          EdgeInsets.symmetric(
+            horizontal: width * 0.04,
+            vertical: height * 0.014,
+          ),
+        ),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
@@ -36,16 +50,24 @@ class CustomizedElevatedButton extends StatelessWidget {
                 : BorderSide.none,
           ),
         ),
-        elevation: WidgetStateProperty.all(0),
-        padding: WidgetStateProperty.all(
-          EdgeInsets.symmetric(
-            horizontal: width * 0.04,
-            vertical: height * 0.014,
+      ),
+
+      child: Center(
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 200),
+          child: isLoading
+              ? LoadingAnimationWidget.staggeredDotsWave(
+            key: const ValueKey("loading"),
+            color: AppColors.yellowColor,
+            size: 20,
+          )
+              : DefaultTextStyle(
+            key: const ValueKey("child"),
+            style: const TextStyle(),
+            child: child,
           ),
         ),
       ),
-      onPressed: onPressed,
-      child: child,
     );
   }
 }
