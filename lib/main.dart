@@ -8,14 +8,15 @@ import 'package:cineluxe/utils/app_routes.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
   await EasyLocalization.ensureInitialized();
-
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar')],
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.registerScreen: (context) => const Register(),
         AppRoutes.splashScreen: (context) => const SplashScreen(),
         AppRoutes.onboardingScreen: (context) => const OnBoardingPage(),
-        AppRoutes.updateProfileScreen: (context) =>  UpdateProfileScreen(),
+        AppRoutes.updateProfileScreen: (context) => UpdateProfileScreen(),
       },
     );
   }
