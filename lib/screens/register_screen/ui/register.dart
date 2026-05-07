@@ -38,6 +38,7 @@ class _RegisterState extends State<Register> {
   final TextEditingController phoneController = TextEditingController();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  String selectedAvatar = 'avatar_1';
 
   final PageController controller = PageController(
     viewportFraction: 0.33,
@@ -96,6 +97,12 @@ class _RegisterState extends State<Register> {
                 height: height * 0.15,
                 child: PageView.builder(
                   controller: controller,
+                  onPageChanged: (index){
+                    final avatars = AppResources.avatarList;
+                    final realIndex = index % avatars.length;
+                    selectedAvatar = 'avatar${realIndex + 1}';
+                    setState(() {});
+                  },
                   itemBuilder: (context, index) {
                     final avatars = AppResources.avatarList;
                     final realIndex = index % avatars.length;
@@ -259,6 +266,7 @@ class _RegisterState extends State<Register> {
                                           email: emailController.text,
                                           password: passwordController.text,
                                           phone: phoneController.text,
+                                          avatar: selectedAvatar,
                                         );
                                       }
                                     },

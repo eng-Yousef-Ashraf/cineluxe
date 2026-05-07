@@ -12,11 +12,12 @@ class RegisterViewModel extends Cubit<RegisterStates> {
     required String email,
     required String password,
     required String phone,
+    required String avatar,
   }) async {
     emit(RegisterLoading());
 
     try {
-      final user = await repository.register(email, password);
+      final user = await repository.register(email, password, name, phone, avatar);
       emit(RegisterSuccess(user!));
     } catch (e) {
       emit(RegisterError(e.toString().replaceFirst("Exception: ", "")));

@@ -1,3 +1,4 @@
+import 'package:cineluxe/data/repository/firestore/repository/impl/user_repository_impl.dart';
 import 'package:cineluxe/screens/forget_password_screen/logic/reset_view_model.dart';
 import 'package:cineluxe/screens/forget_password_screen/ui/forget_password.dart';
 import 'package:cineluxe/screens/home_screen/ui/home.dart';
@@ -7,8 +8,10 @@ import 'package:cineluxe/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:cineluxe/screens/register_screen/logic/register_view_model.dart';
 import 'package:cineluxe/screens/register_screen/ui/register.dart';
 import 'package:cineluxe/screens/splash/splash_screen.dart';
-import 'package:cineluxe/screens/update_profile_screen/Profile.dart';
+import 'package:cineluxe/screens/update_profile_screen/logic/update_profile_view_model.dart';
+import 'package:cineluxe/screens/update_profile_screen/ui/Profile.dart';
 import 'package:cineluxe/utils/app_routes.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +20,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'data/repository/auth/data_sources/remote/impl/auth_remote_data_source_impl.dart';
 import 'data/repository/auth/repository/impl/auth_repository_impl.dart';
+import 'data/repository/firestore/data_sources/remote/impl/user_remote_data_source_impl.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -55,7 +59,14 @@ void main() async {
             AuthRepositoryImpl(
               AuthRemoteDataSourceImpl(FirebaseAuth.instance),
             ),
-          ),)
+          ),),
+          BlocProvider(
+            create: (context) => UserCubit(
+              UserRepositoryImpl(
+                UserRemoteDataSourceImpl(FirebaseFirestore.instance),
+              ),
+            )..loadUser(),
+          ),
         ],
         child: const MyApp(),
       ),
