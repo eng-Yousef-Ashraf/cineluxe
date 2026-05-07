@@ -57,7 +57,7 @@ class _LoginState extends State<Login> {
                     if (state is LoginSuccess) {
                       Navigator.pushReplacementNamed(
                         context,
-                        AppRoutes.homeScreen,
+                        AppRoutes.updateProfileScreen,
                       );
                     }
 
