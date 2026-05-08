@@ -35,80 +35,76 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: width * 0.05),
-          child: Column(
-            children: [
-              SizedBox(height: height * 0.015),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: height * 0.015),
 
-              _buildHeader(width),
+                _buildHeader(width),
 
-              SizedBox(height: height * 0.04),
+                SizedBox(height: height * 0.04),
 
-              _buildMainAvatar(width),
+                _buildMainAvatar(width),
 
-              SizedBox(height: height * 0.05),
+                SizedBox(height: height * 0.05),
 
-              // --- Fields ---
-              CustomizedTextFormField(
-                hintText: "Enter Name",
-                textInputAction: TextInputAction.next,
-                prefixIcon: const Icon(Icons.person_outline),
-              ),
+                // --- Fields ---
+                CustomizedTextFormField(
+                  hintText: "Enter Name",
+                  textInputAction: TextInputAction.next,
+                  prefixIcon: const Icon(Icons.person_outline),
+                ),
 
-              SizedBox(height: height * 0.025),
+                SizedBox(height: height * 0.025),
 
-              CustomizedTextFormField(
-                hintText: "Enter Number",
-                textInputAction: TextInputAction.done,
-                keyboardType: TextInputType.phone,
-                prefixIcon: const Icon(Icons.phone_outlined),
-              ),
+                CustomizedTextFormField(
+                  hintText: "Enter Number",
+                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.phone,
+                  prefixIcon: const Icon(Icons.phone_outlined),
+                ),
 
-              SizedBox(height: height * 0.015),
+                SizedBox(height: height * 0.015),
 
-              Align(
-                alignment: Alignment.centerLeft,
-                child: TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Reset Password",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: width * 0.035,
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Reset Password",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: width * 0.035,
+                      ),
                     ),
                   ),
                 ),
-              ),
 
-              const Spacer(),
+                const Spacer(),
 
-              // --- Buttons ---
-              SizedBox(
-                width: double.infinity,
-                child: CustomizedElevatedButton(
-                  onPressed: () {},
-                  backgroundColor: Colors.redAccent,
-                  child: Text(
-                    "Delete Account",
-                    style: AppStyles.white20Bold,
+                // --- Buttons ---
+                SizedBox(
+                  width: double.infinity,
+                  child: CustomizedElevatedButton(
+                    onPressed: () {},
+                    backgroundColor: Colors.redAccent,
+                    child: Text("Delete Account", style: AppStyles.white20Bold),
                   ),
                 ),
-              ),
 
-              SizedBox(height: height * 0.02),
+                SizedBox(height: height * 0.02),
 
-              SizedBox(
-                width: double.infinity,
-                child: CustomizedElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Update Data",
-                    style: AppStyles.black20Bold,
+                SizedBox(
+                  width: double.infinity,
+                  child: CustomizedElevatedButton(
+                    onPressed: () {},
+                    child: Text("Update Data", style: AppStyles.black20Bold),
                   ),
                 ),
-              ),
 
-              SizedBox(height: height * 0.02),
-            ],
+                SizedBox(height: height * 0.02),
+              ],
+            ),
           ),
         ),
       ),
@@ -191,10 +187,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: Image.asset(
-                      avatars[index],
-                      fit: BoxFit.cover,
-                    ),
+                    child: Image.asset(avatars[index], fit: BoxFit.cover),
                   ),
                 ),
               );
