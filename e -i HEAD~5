@@ -1,0 +1,21 @@
+[33m454d45d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/update_profile&delete[m[33m, [m[1;31morigin/feature/update_profile&delete[m[33m)[m + feature / full logic for update and delete the profile + handle UI of update profile tab
+[33m328b0ce[m[33m ([m[1;32mtask/update_profile[m[33m, [m[1;32mtask/rahma-navigation[m[33m)[m Merge remote-tracking branch 'origin/task/rahma-navigation' into task/rahma-navigation
+[33mb7957b9[m feat: implement main layout with bottom navigation bar
+[33m2f407e3[m[33m ([m[1;32msign_in[m[33m)[m Merge remote-tracking branch 'origin/sign_in' into sign_in
+[33ma9f64bc[m + pull new update / firebase store
+[33m06d76f4[m[33m ([m[1;31morigin/sign_in[m[33m, [m[1;31morigin/development[m[33m)[m created database for each user using firestore
+[33mdacf91d[m[33m ([m[1;31morigin/task/rahma-navigation[m[33m)[m feat: implement main layout with bottom navigation bar
+[33mbb728a8[m completed:finished authentication for login, register and reset
+[33mcba8e16[m intialize firebase
+[33m600c709[m[33m ([m[1;31morigin/feat[m[33m)[m adjust:adjusted textfromfield prefix icon sizes
+[33m20e1a0e[m Update README.md
+[33m90c8b5e[m + rahma add Update profile screen
+[33m30942c4[m Merge remote-tracking branch 'origin/feat' into feat
+[33m2b17b29[m save my work
+[33m2d0550d[m enhancement:adjusted speed of animation and triangle shape feat:added a sound effect to splash screen syncing with animation adjustment:made pageview of onboarding screen unscrollable
+[33mfa98da2[m - Add Splash screen and onboarding Screen UI
+[33m475943d[m - Add Splash screen and onboarding Screen UI
+[33me0e8832[m - Add Splash screen and onboarding Screen UI
+[33m404773a[m feat:completed login,register and forget password ui screens
+[33mea40c14[m feat:app icon generated
+[33mf79ccd6[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m project setup

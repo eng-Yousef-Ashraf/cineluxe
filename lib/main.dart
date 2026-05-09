@@ -6,6 +6,7 @@ import 'package:cineluxe/screens/main_layout/main_layout.dart';
 import 'package:cineluxe/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:cineluxe/screens/register_screen/logic/register_view_model.dart';
 import 'package:cineluxe/screens/register_screen/ui/register.dart';
+import 'package:cineluxe/screens/search_screen/ui/search_screen.dart';
 import 'package:cineluxe/screens/splash/splash_screen.dart';
 import 'package:cineluxe/screens/update_profile_screen/ui/Profile.dart';
 import 'package:cineluxe/utils/app_routes.dart';
@@ -90,6 +91,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.onboardingScreen: (context) => const OnBoardingPage(),
         AppRoutes.updateProfileScreen: (context) => UpdateProfileScreen(),
         AppRoutes.homeScreen: (context) => const MainLayout(),
+        AppRoutes.searchScreen: (context) => const SearchScreen(),
       },
     );
   }

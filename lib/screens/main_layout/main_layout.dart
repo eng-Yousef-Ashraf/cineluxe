@@ -1,4 +1,5 @@
 import 'package:cineluxe/screens/home_screen/ui/home.dart';
+import 'package:cineluxe/screens/search_screen/ui/search_screen.dart';
 import 'package:cineluxe/utils/app_colors.dart';
 
 import 'package:flutter/material.dart';
@@ -16,13 +17,8 @@ class _MainLayoutState extends State<MainLayout> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    const Home(),
-    const Center(
-      child: Text(
-        'Search Screen',
-        style: TextStyle(color: Colors.white, fontSize: 20),
-      ),
-    ),
+     Home(),
+    SearchScreen(),
     const Center(
       child: Text(
         'Browse Screen',
@@ -38,19 +34,15 @@ class _MainLayoutState extends State<MainLayout> {
       backgroundColor: const Color(0xFF121212),
       body: IndexedStack(index: _currentIndex, children: _pages),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(color: Colors.white.withOpacity(0.1), width: 0.5),
-          ),
-        ),
         child: BottomNavigationBar(
+          elevation: 0,
           currentIndex: _currentIndex,
           onTap: (index) {
             setState(() {
               _currentIndex = index;
             });
           },
-          backgroundColor: const Color(0xFF121212),
+          backgroundColor:  Color(0xFF282A28),
           type: BottomNavigationBarType.fixed,
           selectedItemColor:  AppColors.yellowColor,
           unselectedItemColor: Colors.grey,
@@ -58,13 +50,21 @@ class _MainLayoutState extends State<MainLayout> {
           showUnselectedLabels: false,
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home),
+              icon: ImageIcon(
+                AssetImage('assets/images/home.png'),
+              ),
+              activeIcon: ImageIcon(
+                AssetImage('assets/images/home1.png'),
+              ),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search_outlined),
-              activeIcon: Icon(Icons.search),
+              icon: ImageIcon(
+                AssetImage('assets/images/search.png'),
+              ),
+              activeIcon: ImageIcon(
+                AssetImage('assets/images/search1.png'),
+              ),
               label: 'Search',
             ),
             BottomNavigationBarItem(
