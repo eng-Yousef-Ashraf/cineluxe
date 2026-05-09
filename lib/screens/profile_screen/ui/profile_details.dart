@@ -146,9 +146,13 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                           flex: 2,
                           child: CustomizedElevatedButton(
                             paddingHeight:  0.02,
-                              onPressed: (){
-                                Navigator.pushNamed(context, AppRoutes.updateProfileScreen);
-                              }, child: Text('Edit Profile',style: GoogleFonts.roboto(fontSize: 20,fontWeight: FontWeight.w500,color: AppColors.bgColor),))),
+            onPressed: () async {
+            await Navigator.pushNamed(
+            context,
+            AppRoutes.updateProfileScreen,
+            );
+            context.read<UserCubit>().loadUser();
+            }, child: Text('Edit Profile',style: GoogleFonts.roboto(fontSize: 20,fontWeight: FontWeight.w500,color: AppColors.bgColor),))),
                       SizedBox(width:width*0.02 ,),
                       Expanded(
                         flex: 1,

@@ -98,8 +98,6 @@ class _UpdateProfileScreenState
                     message: "Account deleted successfully",
                     buttonText: "OK",
                     onPressed: () {
-                      Navigator.pop(context);
-
                       Navigator.pushNamedAndRemoveUntil(
                         context,
                         AppRoutes.loginScreen,
@@ -407,7 +405,6 @@ class _UpdateProfileScreenState
       message: "Are you sure you want to delete your account? ",
       buttonText: "Delete",
       onPressed: () {
-        Navigator.pop(pageContext);
         pageContext.read<UserCubit>().deleteUser();
       },
     );

@@ -21,12 +21,14 @@ class SearchScreen extends StatelessWidget {
       body: Padding(
         padding: EdgeInsetsGeometry.symmetric(horizontal: width*0.02, vertical: height*0.02),
         child: SafeArea(
-          child: Column(
-            children: [
-              CustomizedTextFormField(textInputAction: TextInputAction.search, hintText: 'Search',prefixIcon: Image.asset(AppAssets.searchLogo, width: width*0.02),),
-              SizedBox(height: height*0.32,),
-              Image.asset(AppAssets.popcorn,)
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                CustomizedTextFormField(textInputAction: TextInputAction.search, hintText: 'Search',prefixIcon: Image.asset(AppAssets.searchLogo, width: width*0.02),),
+                SizedBox(height: height*0.32,),
+                Image.asset(AppAssets.popcorn,)
+              ],
+            ),
           ),
         ),
       )

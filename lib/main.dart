@@ -75,9 +75,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'cineluxe',
       debugShowCheckedModeBanner: false,
-
-      // هنا بنخلي التطبيق يفتح على الليوت الجديد اللي فيه البوتوم نافيجيتور
-      initialRoute: AppRoutes.homeScreen,
+      initialRoute: AppRoutes.splashScreen,
 
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
