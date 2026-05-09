@@ -1,6 +1,5 @@
 
 
-https://github.com/user-attachments/assets/10170606-0aa8-4152-9afd-eeed0fe57f19
 
 # cineluxe
 
@@ -18,3 +17,7 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+https://drive.google.com/file/d/1ZX5-BlhA7kYnicrb2igBSSdL-92A5vAi/view
+
+
