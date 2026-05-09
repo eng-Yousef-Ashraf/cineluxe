@@ -12,4 +12,22 @@ class UserRepositoryImpl implements UserRepository {
     return userRemoteDataSource.getCurrentUser();
   }
 
+  @override
+  Future<void> updateUser({
+    required String name,
+    required String phone,
+    required String avatar,
+  }) {
+    return userRemoteDataSource.updateUser(
+      name: name,
+      phone: phone,
+      avatar: avatar,
+    );
+  }
+
+  @override
+  Future<void> deleteUser() {
+    return userRemoteDataSource.deleteUser();
+  }
+
 }

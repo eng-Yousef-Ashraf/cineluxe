@@ -21,6 +21,13 @@ class AppStyles {
   );
 
 
+  static final TextStyle white20W400 = GoogleFonts.roboto(
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+    color: AppColors.whiteColor,
+  );
+
+
   static final TextStyle black20Bold = GoogleFonts.roboto(
     fontSize: 20,
     fontWeight: FontWeight.bold,

@@ -1,6 +1,9 @@
 import 'package:cineluxe/screens/home_screen/ui/home.dart';
-import 'package:cineluxe/screens/update_profile_screen/Profile.dart';
+import 'package:cineluxe/utils/app_colors.dart';
+
 import 'package:flutter/material.dart';
+
+import '../update_profile_screen/ui/Profile.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -49,7 +52,7 @@ class _MainLayoutState extends State<MainLayout> {
           },
           backgroundColor: const Color(0xFF121212),
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: const Color(0xFFFDBB05),
+          selectedItemColor:  AppColors.yellowColor,
           unselectedItemColor: Colors.grey,
           showSelectedLabels: false,
           showUnselectedLabels: false,

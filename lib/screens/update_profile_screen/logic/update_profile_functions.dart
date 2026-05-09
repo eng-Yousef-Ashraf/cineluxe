@@ -16,7 +16,7 @@ class UpdateProfileFunctions {
     }
     return null;
   }
-static  String getAvatarPath(String avatarId) {
-    return "assets/avatars/$avatarId.png";
+  static String getAvatarPath(String avatarId) {
+    return avatarId.contains("assets") ? avatarId : "assets/avatars/$avatarId.png";
   }
 }
