@@ -7,7 +7,7 @@ import 'package:cineluxe/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:cineluxe/screens/register_screen/logic/register_view_model.dart';
 import 'package:cineluxe/screens/register_screen/ui/register.dart';
 import 'package:cineluxe/screens/splash/splash_screen.dart';
-import 'package:cineluxe/screens/update_profile_screen/Profile.dart';
+import 'package:cineluxe/screens/update_profile_screen/ui/Profile.dart';
 import 'package:cineluxe/utils/app_routes.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';

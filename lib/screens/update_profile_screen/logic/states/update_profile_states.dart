@@ -1,4 +1,3 @@
-
 import '../../../../models/user_model.dart';
 
 abstract class UserState {}
@@ -11,6 +10,10 @@ class UserLoaded extends UserState {
   final UserModel user;
   UserLoaded(this.user);
 }
+
+class UserUpdated extends UserState {}
+
+class UserDeleted extends UserState {}
 
 class UserError extends UserState {
   final String message;
