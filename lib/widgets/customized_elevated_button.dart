@@ -9,6 +9,8 @@ class CustomizedElevatedButton extends StatelessWidget {
   final Color? backgroundColor;
   final bool isOutlined;
   final bool isLoading;
+  final double paddingWidth;
+  final double paddingHeight;
 
   const CustomizedElevatedButton({
     super.key,
@@ -17,6 +19,8 @@ class CustomizedElevatedButton extends StatelessWidget {
     this.backgroundColor,
     this.isOutlined = false,
     this.isLoading = false,
+    this.paddingWidth = 0.04,
+    this.paddingHeight = 0.014,
   });
 
   @override
@@ -35,8 +39,8 @@ class CustomizedElevatedButton extends StatelessWidget {
         elevation: WidgetStateProperty.all(0),
         padding: WidgetStateProperty.all(
           EdgeInsets.symmetric(
-            horizontal: width * 0.04,
-            vertical: height * 0.014,
+            horizontal: width * paddingWidth,
+            vertical: height * paddingHeight,
           ),
         ),
         shape: WidgetStateProperty.all(

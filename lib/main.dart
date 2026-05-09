@@ -1,45 +1,37 @@
-import 'package:cineluxe/data/repository/firestore/repository/impl/user_repository_impl.dart';
 import 'package:cineluxe/screens/forget_password_screen/logic/reset_view_model.dart';
 import 'package:cineluxe/screens/forget_password_screen/ui/forget_password.dart';
-import 'package:cineluxe/screens/home_screen/ui/home.dart';
 import 'package:cineluxe/screens/login_screen/logic/login_view_model.dart';
 import 'package:cineluxe/screens/login_screen/ui/login.dart';
+import 'package:cineluxe/screens/main_layout/main_layout.dart';
 import 'package:cineluxe/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:cineluxe/screens/register_screen/logic/register_view_model.dart';
 import 'package:cineluxe/screens/register_screen/ui/register.dart';
+import 'package:cineluxe/screens/search_screen/ui/search_screen.dart';
 import 'package:cineluxe/screens/splash/splash_screen.dart';
-import 'package:cineluxe/screens/update_profile_screen/logic/update_profile_view_model.dart';
 import 'package:cineluxe/screens/update_profile_screen/ui/Profile.dart';
 import 'package:cineluxe/utils/app_routes.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'data/repository/auth/data_sources/remote/impl/auth_remote_data_source_impl.dart';
 import 'data/repository/auth/repository/impl/auth_repository_impl.dart';
-import 'data/repository/firestore/data_sources/remote/impl/user_remote_data_source_impl.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  WidgetsBinding widgetsBinding =
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
   await EasyLocalization.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   runApp(
     EasyLocalization(
-      supportedLocales: const [
-        Locale('en'),
-        Locale('ar'),
-      ],
+      supportedLocales: const [Locale('en'), Locale('ar')],
       path: 'assets/translations',
       child: MultiBlocProvider(
         providers: [
@@ -50,22 +42,19 @@ void main() async {
               ),
             ),
           ),
-          BlocProvider(create: (context) => RegisterViewModel(
-            AuthRepositoryImpl(
-              AuthRemoteDataSourceImpl(FirebaseAuth.instance),
-            ),
-          ),),
-          BlocProvider(create: (context) => ResetViewModel(
-            AuthRepositoryImpl(
-              AuthRemoteDataSourceImpl(FirebaseAuth.instance),
-            ),
-          ),),
           BlocProvider(
-            create: (context) => UserCubit(
-              UserRepositoryImpl(
-                UserRemoteDataSourceImpl(FirebaseFirestore.instance),
+            create: (context) => RegisterViewModel(
+              AuthRepositoryImpl(
+                AuthRemoteDataSourceImpl(FirebaseAuth.instance),
               ),
-            )..loadUser(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => ResetViewModel(
+              AuthRepositoryImpl(
+                AuthRemoteDataSourceImpl(FirebaseAuth.instance),
+              ),
+            ),
           ),
         ],
         child: const MyApp(),
@@ -77,6 +66,7 @@ void main() async {
     FlutterNativeSplash.remove();
   });
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -86,7 +76,8 @@ class MyApp extends StatelessWidget {
       title: 'cineluxe',
       debugShowCheckedModeBanner: false,
 
-      initialRoute: AppRoutes.splashScreen,
+      // هنا بنخلي التطبيق يفتح على الليوت الجديد اللي فيه البوتوم نافيجيتور
+      initialRoute: AppRoutes.homeScreen,
 
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
@@ -99,7 +90,8 @@ class MyApp extends StatelessWidget {
         AppRoutes.splashScreen: (context) => const SplashScreen(),
         AppRoutes.onboardingScreen: (context) => const OnBoardingPage(),
         AppRoutes.updateProfileScreen: (context) => UpdateProfileScreen(),
-        AppRoutes.homeScreen: (context) => const Home(),
+        AppRoutes.homeScreen: (context) => const MainLayout(),
+        AppRoutes.searchScreen: (context) => const SearchScreen(),
       },
     );
   }

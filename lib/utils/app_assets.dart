@@ -18,4 +18,16 @@ class AppAssets {
   static const String avatar9 = 'assets/images/avatar9.png';
   static const String nameLogo = 'assets/images/name.png';
   static const String phoneLogo = 'assets/images/phone.png';
+  static const String exploreLogo = 'assets/images/explore.png';
+  static const String explore1Logo = 'assets/images/explore1.png';
+  static const String profileLogo = 'assets/images/profile.png';
+  static const String profile1Logo = 'assets/images/profile1.png';
+  static const String searchLogo = 'assets/images/search.png';
+  static const String search1Logo = 'assets/images/search1.png';
+  static const String homeLogo = 'assets/images/home.png';
+  static const String home1Logo = 'assets/images/home1.png';
+  static const String popcorn = 'assets/images/popcorn.png';
+  static const String personLogo = 'assets/images/person.png';
+  static const String watchlistLogo = 'assets/images/dots.png';
+  static const String historyLogo = 'assets/images/folder.png';
 }

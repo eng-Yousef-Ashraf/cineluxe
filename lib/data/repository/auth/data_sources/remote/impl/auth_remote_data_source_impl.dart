@@ -1,4 +1,3 @@
-import 'package:cineluxe/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -37,41 +36,55 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       final userCredential =
       await firebaseAuth.signInWithCredential(credential);
 
+      final uid = userCredential.user!.uid;
+
+      final doc = await firestore.collection("users").doc(uid).get();
+
+      if (!doc.exists) {
+        await firestore.collection("users").doc(uid).set({
+          "id": uid,
+          "name": userCredential.user!.displayName ?? "",
+          "email": userCredential.user!.email ?? "",
+          "phone": "",
+          "avatar": "",
+          "isWatchlist": false,
+          "isHistory": false,
+        });
+      }
+
       return userCredential.user;
-    } on GoogleSignInException catch (_) {
-      return null;
-    } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
     } catch (e) {
-      throw Exception('unknown-error');
+      throw Exception(e.toString());
     }
   }
 
   @override
-  Future<User?> register(String email, String password, String name, String phone,String avatar) async {
+  Future<User?> register(
+      String email,
+      String password,
+      String name,
+      String phone,
+      String avatar,
+      ) async {
     try {
       final credential = await firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      UserModel userModel = UserModel(
-        id: credential.user!.uid,
-        name: name,
-        email: email,
-        phone: phone,
-        avatar: avatar,
-        isWatchlist: false,
-        isHistory: false,
-      );
-      await firestore
-          .collection('users')
-          .doc(userModel.id)
-          .set(userModel.toJson());
 
+      final uid = credential.user!.uid;
+
+      await firestore.collection('users').doc(uid).set({
+        "id": uid,
+        "name": name,
+        "email": email,
+        "phone": phone,
+        "avatar": avatar,
+        "isWatchlist": false,
+        "isHistory": false,
+      });
 
       return credential.user;
-    } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
     } catch (e) {
       throw Exception(e.toString());
     }
@@ -79,6 +92,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<void> resetPassword(String email) async {
-     await firebaseAuth.sendPasswordResetEmail(email: email);
+    await firebaseAuth.sendPasswordResetEmail(email: email);
   }
 }
