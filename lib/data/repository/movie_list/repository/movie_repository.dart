@@ -1,0 +1,9 @@
+import 'package:cineluxe/models/movie_response.dart';
+
+
+abstract class MovieRepository {
+  Future<MovieResponse> getMovies({
+    String sortBy = 'date_added',
+    String? genre,
+  });
+}

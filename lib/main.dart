@@ -1,5 +1,6 @@
 import 'package:cineluxe/screens/forget_password_screen/logic/reset_view_model.dart';
 import 'package:cineluxe/screens/forget_password_screen/ui/forget_password.dart';
+import 'package:cineluxe/screens/home_screen/logic/movie_view_model.dart';
 import 'package:cineluxe/screens/login_screen/logic/login_view_model.dart';
 import 'package:cineluxe/screens/login_screen/ui/login.dart';
 import 'package:cineluxe/screens/main_layout/main_layout.dart';
@@ -19,6 +20,8 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'data/repository/auth/data_sources/remote/impl/auth_remote_data_source_impl.dart';
 import 'data/repository/auth/repository/impl/auth_repository_impl.dart';
+import 'data/repository/movie_list/data_source/impl/movie_remote_data_souce_impl.dart';
+import 'data/repository/movie_list/repository/impl/movie_repository_impl.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -53,6 +56,13 @@ void main() async {
             create: (context) => ResetViewModel(
               AuthRepositoryImpl(
                 AuthRemoteDataSourceImpl(FirebaseAuth.instance),
+              ),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => MovieCubit(
+              MovieRepositoryImpl(
+                MovieRemoteDataSourceImpl(),
               ),
             ),
           ),
