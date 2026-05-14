@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:cineluxe/models/movie_response.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +8,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../utils/app_sizes.dart';
 import '../logic/movie_states/movie_states.dart';
 import '../logic/movie_view_model.dart';
+import 'movie_details.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -54,7 +56,7 @@ class Home extends StatelessWidget {
                           enableInfiniteScroll: true,
                         ),
                         itemBuilder: (context, index, realIndex) =>
-                            _buildCarouselItem(movies[index]),
+                            _buildCarouselItem(movies[index], context),
                       );
                     },
                   ),
@@ -110,7 +112,7 @@ class Home extends StatelessWidget {
                           ),
                           itemCount: movies.length,
                           itemBuilder: (context, index) =>
-                              _buildListItem(movies[index], screenWidth),
+                              _buildListItem(movies[index], screenWidth, context),
                         ),
                       );
                     },
@@ -135,49 +137,77 @@ class Home extends StatelessWidget {
     ),
   );
 
-  Widget _buildCarouselItem(dynamic movie) => Stack(
-    children: [
-      Container(
-        margin: const EdgeInsets.symmetric(horizontal: 5),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          image: DecorationImage(
-            image: NetworkImage(movie.mediumCoverImage ?? ''),
-            fit: BoxFit.cover,
+  Widget _buildCarouselItem(Movies movie,BuildContext context) => GestureDetector(
+    onTap: () {
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => MovieDetailsScreen(
+            movieId: movie.id ?? 0,
           ),
         ),
-      ),
-      Positioned(
-        top: 15,
-        left: 15,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      );
+
+    },
+    child: Stack(
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 5),
           decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.6),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(
-            children: [
-              Text(
-                movie.rating?.toString() ?? '0',
-                style: const TextStyle(color: Colors.white),
-              ),
-              const Icon(Icons.star, color: Colors.amber, size: 16),
-            ],
+            borderRadius: BorderRadius.circular(20),
+            image: DecorationImage(
+              image: NetworkImage(movie.mediumCoverImage ?? ''),
+              fit: BoxFit.cover,
+            ),
           ),
         ),
-      ),
-    ],
+        Positioned(
+          top: 15,
+          left: 15,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.6),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  movie.rating?.toString() ?? '0',
+                  style: const TextStyle(color: Colors.white),
+                ),
+                const Icon(Icons.star, color: Colors.amber, size: 16),
+              ],
+            ),
+          ),
+        ),
+      ],
+    ),
   );
 
-  Widget _buildListItem(dynamic movie, double screenWidth) => Container(
-    width: screenWidth * 0.3,
-    margin: const EdgeInsets.symmetric(horizontal: 5),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(15),
-      image: DecorationImage(
-        image: NetworkImage(movie.mediumCoverImage ?? ''),
-        fit: BoxFit.cover,
+  Widget _buildListItem(Movies movie, double screenWidth,BuildContext context) => GestureDetector(
+    onTap: () {
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => MovieDetailsScreen(
+            movieId: movie.id ?? 0,
+          ),
+        ),
+      );
+
+    },
+    child: Container(
+      width: screenWidth * 0.3,
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        image: DecorationImage(
+          image: NetworkImage(movie.mediumCoverImage ?? ''),
+          fit: BoxFit.cover,
+        ),
       ),
     ),
   );

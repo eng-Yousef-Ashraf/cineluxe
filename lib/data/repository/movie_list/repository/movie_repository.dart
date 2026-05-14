@@ -6,4 +6,5 @@ abstract class MovieRepository {
     String sortBy = 'date_added',
     String? genre,
   });
+  Future<Movies> getMovieDetails(int movieId);
 }

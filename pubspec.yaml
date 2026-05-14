@@ -48,6 +48,7 @@ dependencies:
   cloud_firestore: ^6.3.0
   carousel_slider: ^5.1.2
   dio: ^5.9.2
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:

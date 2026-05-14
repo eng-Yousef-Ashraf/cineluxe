@@ -24,4 +24,14 @@ class MovieRepositoryImpl implements MovieRepository {
 
     return MovieResponse.fromJson(response.data);
   }
+
+  @override
+  Future<Movies> getMovieDetails(int movieId) async{
+    final movie =
+    await movieRemoteDataSource.getMovieDetails(movieId);
+    return Movies.fromJson(
+      movie.data['data']['movie'],
+    );
+  }
+
 }

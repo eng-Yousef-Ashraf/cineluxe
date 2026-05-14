@@ -6,5 +6,5 @@ abstract class MovieRemoteDataSource {
     String? sortBy,
     String? genre,
   });
-
+Future<Response> getMovieDetails(int movieId);
 }

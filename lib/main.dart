@@ -85,7 +85,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'cineluxe',
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.splashScreen,
+      initialRoute: AppRoutes.homeScreen,
 
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,

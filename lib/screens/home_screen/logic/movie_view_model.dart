@@ -9,6 +9,7 @@ class MovieCubit extends Cubit<MovieState> {
 
   dynamic latestMovies;
   dynamic categoryMovies;
+  dynamic movieDetails;
   String currentGenre = 'action';
 
   final List<String> genres = [
@@ -46,5 +47,24 @@ class MovieCubit extends Cubit<MovieState> {
   Future<void> getRandomMovies() async {
     final randomGenre = (genres.where((g) => g != currentGenre).toList()..shuffle()).first;
     await getAllHomeData(genre: randomGenre, force: true);
+  }
+  Future<void> getMovieDetails(int movieId) async {
+
+    emit(MovieLoading());
+
+    try {
+
+      final result =
+      await repository.getMovieDetails(movieId);
+
+      movieDetails = result;
+
+      emit(MovieDetailsSuccess(result));
+
+    } catch (e) {
+
+      emit(MovieError(e.toString()));
+
+    }
   }
 }
