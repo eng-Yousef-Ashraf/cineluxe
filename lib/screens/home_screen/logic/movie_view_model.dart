@@ -1,70 +1,97 @@
+import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../data/repository/movie_list/repository/movie_repository.dart';
+import '../../../models/movie_response.dart';
+import '../../../models/movie_datails_response.dart';
 import 'movie_states/movie_states.dart';
 
 class MovieCubit extends Cubit<MovieState> {
   final MovieRepository repository;
 
-  MovieCubit(this.repository) : super(MovieInitial());
+  List<Movies>? latestMovies;
+  List<Movies>? categoryMovies;
 
-  dynamic latestMovies;
-  dynamic categoryMovies;
-  dynamic movieDetails;
   String currentGenre = 'action';
 
-  final List<String> genres = [
-    'action', 'comedy', 'drama', 'horror', 'sci-fi', 'animation', 'thriller'
-  ];
+  MovieCubit(this.repository) : super(MovieInitial()) {
+    getAllHomeData();
+  }
 
-  Future<void> getAllHomeData({String? genre, bool force = false}) async {
+  Future<void> getAllHomeData({
+    String? genre,
+    bool force = false,
+  }) async {
     final newGenre = genre ?? currentGenre;
 
-    if (!force && state is MovieSuccess && newGenre == currentGenre) {
+    if (!force &&
+        latestMovies != null &&
+        newGenre == currentGenre) {
       return;
     }
 
     emit(MovieLoading());
+
     currentGenre = newGenre;
 
     try {
       if (latestMovies == null || force) {
-        final latestResult = await repository.getMovies(sortBy: 'date_added');
-        latestMovies = latestResult.data?.movies?.take(6).toList();
+        final latestResult = await repository.getMovies(
+          sortBy: 'date_added',
+        );
+
+        latestMovies =
+            latestResult.data?.movies?.take(6).toList();
       }
 
       final categoryResult = await repository.getMovies(
-        genre: newGenre,
-        sortBy: 'date_added',
+        genre: currentGenre,
       );
+
       categoryMovies = categoryResult.data?.movies;
 
-      emit(MovieSuccess(categoryResult));
+      emit(
+        MovieSuccess(
+          movieResponse: categoryResult,
+        ),
+      );
     } catch (e) {
-      emit(MovieError(e.toString()));
+      emit(
+        MovieError(e.toString()),
+      );
+    }
+  }
+
+  Future<void> getMovieDetails(int movieId) async {
+    emit(MovieLoading());
+
+    try {
+      final Movies movie =
+      await repository.getMovieDetails(movieId);
+
+      emit(
+        MovieDetailsSuccess(movie),
+      );
+    } catch (e) {
+      emit(
+        MovieError(e.toString()),
+      );
     }
   }
 
   Future<void> getRandomMovies() async {
-    final randomGenre = (genres.where((g) => g != currentGenre).toList()..shuffle()).first;
-    await getAllHomeData(genre: randomGenre, force: true);
-  }
-  Future<void> getMovieDetails(int movieId) async {
+    final genres = [
+      'action',
+      'comedy',
+      'drama',
+      'horror',
+      'sci-fi',
+    ];
 
-    emit(MovieLoading());
-
-    try {
-
-      final result =
-      await repository.getMovieDetails(movieId);
-
-      movieDetails = result;
-
-      emit(MovieDetailsSuccess(result));
-
-    } catch (e) {
-
-      emit(MovieError(e.toString()));
-
-    }
+    await getAllHomeData(
+      genre: genres[Random().nextInt(genres.length)],
+      force: true,
+    );
   }
 }

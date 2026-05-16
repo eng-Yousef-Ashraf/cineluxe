@@ -34,6 +34,11 @@ class Data {
 }
 
 class Movies {
+
+  List<String> screenshots = [];
+
+  List<Cast>? cast;
+
   int? id;
   String? url;
   String? imdbCode;
@@ -62,16 +67,54 @@ class Movies {
   int? dateUploadedUnix;
 
   Movies({
-    this.id, this.url, this.imdbCode, this.title, this.titleEnglish,
-    this.titleLong, this.slug, this.year, this.rating, this.runtime,
-    this.genres, this.summary, this.descriptionFull, this.synopsis,
-    this.ytTrailerCode, this.language, this.mpaRating, this.backgroundImage,
-    this.backgroundImageOriginal, this.smallCoverImage, this.mediumCoverImage,
-    this.largeCoverImage, this.state, this.torrents, this.dateUploaded,
-    this.dateUploadedUnix
+    this.cast,
+    this.id,
+    this.url,
+    this.imdbCode,
+    this.title,
+    this.titleEnglish,
+    this.titleLong,
+    this.slug,
+    this.year,
+    this.rating,
+    this.runtime,
+    this.genres,
+    this.summary,
+    this.descriptionFull,
+    this.synopsis,
+    this.ytTrailerCode,
+    this.language,
+    this.mpaRating,
+    this.backgroundImage,
+    this.backgroundImageOriginal,
+    this.smallCoverImage,
+    this.mediumCoverImage,
+    this.largeCoverImage,
+    this.state,
+    this.torrents,
+    this.dateUploaded,
+    this.dateUploadedUnix,
   });
 
   Movies.fromJson(Map<String, dynamic> json) {
+
+    screenshots = [
+      json['large_screenshot_image1'],
+      json['large_screenshot_image2'],
+      json['large_screenshot_image3'],
+    ]
+        .whereType<String>()
+        .where((e) => e.isNotEmpty)
+        .toList();
+
+    if (json['cast'] != null) {
+      cast = [];
+
+      json['cast'].forEach((v) {
+        cast!.add(Cast.fromJson(v));
+      });
+    }
+
     id = json['id'];
     url = json['url'];
     imdbCode = json['imdb_code'];
@@ -95,12 +138,15 @@ class Movies {
     mediumCoverImage = json['medium_cover_image'];
     largeCoverImage = json['large_cover_image'];
     state = json['state'];
+
     if (json['torrents'] != null) {
-      torrents = <Torrents>[];
+      torrents = [];
+
       json['torrents'].forEach((v) {
         torrents!.add(Torrents.fromJson(v));
       });
     }
+
     dateUploaded = json['date_uploaded'];
     dateUploadedUnix = json['date_uploaded_unix'];
   }
@@ -144,5 +190,27 @@ class Torrents {
     sizeBytes = json['size_bytes'];
     dateUploaded = json['date_uploaded'];
     dateUploadedUnix = json['date_uploaded_unix'];
+  }
+}
+
+
+class Cast {
+  String? name;
+  String? characterName;
+  String? urlSmallImage;
+  String? imdbCode;
+
+  Cast({
+    this.name,
+    this.characterName,
+    this.urlSmallImage,
+    this.imdbCode,
+  });
+
+  Cast.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    characterName = json['character_name'];
+    urlSmallImage = json['url_small_image'];
+    imdbCode = json['imdb_code'];
   }
 }

@@ -17,13 +17,11 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
       EndPoints.moviesApi,
 
       queryParameters: {
-
         'sort_by': sortBy ?? 'date_added',
         'order_by': 'desc',
         'limit': 20,
-        'genre': genre,
-        if (genre != null && genre.isNotEmpty && genre != 'all') 'genre': genre,
-
+        if (genre != null && genre.isNotEmpty && genre != 'all')
+          'genre': genre,
       },
     );
   }
