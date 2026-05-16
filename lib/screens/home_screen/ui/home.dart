@@ -10,9 +10,15 @@ import '../logic/movie_states/movie_states.dart';
 import '../logic/movie_view_model.dart';
 import 'movie_details.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
 
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int currentIndex=0;
   @override
   Widget build(BuildContext context) {
     var screenHeight = context.height;
@@ -21,13 +27,51 @@ class Home extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned.fill(
-            child: Image.asset(
-              'assets/images/OnBoarding6.png',
-              fit: BoxFit.cover,
-            ),
+          BlocBuilder<MovieCubit, MovieState>(
+            builder: (context, state) {
+
+              final movies = context.read<MovieCubit>().latestMovies ?? [];
+
+              String? image;
+
+              if (movies.isNotEmpty && currentIndex < movies.length) {
+                image = movies[currentIndex].mediumCoverImage;
+              }
+
+              if (image == null || image.isEmpty) {
+                return Container(
+                  color: Colors.black,
+                );
+              }
+
+              return Positioned.fill(
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 500),
+                  child: Stack(
+                    key: ValueKey(image),
+                    fit: StackFit.expand,
+                    children: [
+
+                      Image.network(
+                        image,
+                        fit: BoxFit.cover,
+                      ),
+
+                      BackdropFilter(
+                        filter: ImageFilter.blur(
+                          sigmaX: 15,
+                          sigmaY: 15,
+                        ),
+                        child: Container(
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           ),
-          Container(color: Colors.black.withValues(alpha: 0.4)),
           SafeArea(
             child: SingleChildScrollView(
               child: Column(
@@ -54,6 +98,11 @@ class Home extends StatelessWidget {
                           enlargeCenterPage: true,
                           viewportFraction: 0.75,
                           enableInfiniteScroll: true,
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              currentIndex = index;
+                            });
+                          },
                         ),
                         itemBuilder: (context, index, realIndex) =>
                             _buildCarouselItem(movies[index], context),
