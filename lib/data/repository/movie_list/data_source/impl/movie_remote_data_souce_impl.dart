@@ -37,4 +37,19 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
       },
     );
   }
+
+  @override
+  Future<Response> getMovieSuggestions(
+      int movieId,
+      ) async {
+
+    return await DioManager.dio.get(
+      EndPoints.movieSuggestion,
+
+      queryParameters: {
+        'movie_id': movieId,
+      },
+    );
+  }
+
 }

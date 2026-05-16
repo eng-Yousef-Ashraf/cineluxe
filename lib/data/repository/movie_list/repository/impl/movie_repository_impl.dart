@@ -34,4 +34,25 @@ class MovieRepositoryImpl implements MovieRepository {
     );
   }
 
+
+
+  @override
+  Future<List<Movies>> getMovieSuggestions(
+      int movieId,
+      ) async {
+
+    final response =
+    await movieRemoteDataSource
+        .getMovieSuggestions(movieId);
+
+    List moviesJson =
+    response.data['data']['movies'];
+
+    return moviesJson
+        .map(
+          (e) => Movies.fromJson(e),
+    )
+        .toList();
+  }
+
 }
