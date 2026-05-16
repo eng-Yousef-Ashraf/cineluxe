@@ -14,8 +14,9 @@ class MovieSuccess extends MovieState {
 
 class MovieDetailsSuccess extends MovieState {
   final Movies movie;
+  final List<Movies> suggestedMovies;
 
-  MovieDetailsSuccess(this.movie);
+  MovieDetailsSuccess({required this.movie, required this.suggestedMovies});
 }
 
 class MovieError extends MovieState {
@@ -31,3 +32,6 @@ class MovieDetailsError extends MovieState{
 }
 
 class MovieDetailsLoading extends MovieState{}
+
+class MovieSuggestionsSuccess
+    extends MovieState {}

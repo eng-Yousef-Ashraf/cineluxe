@@ -12,6 +12,7 @@ class MovieCubit extends Cubit<MovieState> {
 
   List<Movies>? latestMovies;
   List<Movies>? categoryMovies;
+  List<Movies>? suggestedMovies;
 
   String currentGenre = 'action';
 
@@ -67,11 +68,19 @@ class MovieCubit extends Cubit<MovieState> {
     emit(MovieLoading());
 
     try {
-      final Movies movie =
-      await repository.getMovieDetails(movieId);
+      final results = await Future.wait([
+        repository.getMovieDetails(movieId),
+        repository.getMovieSuggestions(movieId),
+      ]);
+
+      final Movies movie = results[0] as Movies;
+      suggestedMovies = results[1] as List<Movies>;
 
       emit(
-        MovieDetailsSuccess(movie),
+        MovieDetailsSuccess(
+          movie: movie,
+          suggestedMovies: suggestedMovies!,
+        ),
       );
     } catch (e) {
       emit(
@@ -94,4 +103,31 @@ class MovieCubit extends Cubit<MovieState> {
       force: true,
     );
   }
+
+
+  Future<void> getMovieSuggestions(
+      int movieId,
+      ) async {
+
+    emit(MovieLoading());
+
+    try {
+
+      suggestedMovies =
+      await repository
+          .getMovieSuggestions(movieId);
+
+      emit(
+        MovieSuggestionsSuccess(),
+      );
+
+    } catch (e) {
+
+      emit(
+        MovieError(e.toString()),
+      );
+
+    }
+  }
+
 }
