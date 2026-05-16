@@ -30,4 +30,9 @@ class AppAssets {
   static const String personLogo = 'assets/images/person.png';
   static const String watchlistLogo = 'assets/images/dots.png';
   static const String historyLogo = 'assets/images/folder.png';
+  static const String watchLogo = 'assets/images/watch.png';
+  static const String likes = 'assets/images/likes.png';
+  static const String clock = 'assets/images/clock.png';
+  static const String star = 'assets/images/star.png';
+
 }

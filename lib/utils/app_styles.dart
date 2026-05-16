@@ -29,7 +29,16 @@ class AppStyles {
     fontWeight: FontWeight.bold,
     color: AppColors.yellowColor,
   );
-
+  static final TextStyle grey20W700 = GoogleFonts.roboto(
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+    color: AppColors.grey2Color,
+  );
+  static final TextStyle white24W700 = GoogleFonts.roboto(
+    fontSize: 24,
+    fontWeight: FontWeight.w700,
+    color: AppColors.whiteColor,
+  );
 
   static final TextStyle white20W400 = GoogleFonts.roboto(
     fontSize: 20,
@@ -112,5 +121,12 @@ class AppStyles {
     fontSize: 20,
     fontWeight: FontWeight.w400,
     color: AppColors.bgColor,
+  );
+
+
+  static TextStyle white14W500 = GoogleFonts.roboto(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: Colors.white,
   );
 }
