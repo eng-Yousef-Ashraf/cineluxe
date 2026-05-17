@@ -1,3 +1,5 @@
+import 'package:cineluxe/screens/Movie%20Suggest/logic/movie_repository.dart';
+import 'package:cineluxe/screens/Movie%20Suggest/logic/movie_suggest_view_model.dart';
 import 'package:cineluxe/screens/forget_password_screen/logic/reset_view_model.dart';
 import 'package:cineluxe/screens/forget_password_screen/ui/forget_password.dart';
 import 'package:cineluxe/screens/login_screen/logic/login_view_model.dart';
@@ -21,19 +23,25 @@ import 'data/repository/auth/repository/impl/auth_repository_impl.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
   await EasyLocalization.ensureInitialized();
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  FlutterNativeSplash.preserve(
+    widgetsBinding: WidgetsFlutterBinding.ensureInitialized(),
+  );
 
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar')],
+
       path: 'assets/translations',
+
       child: MultiBlocProvider(
         providers: [
+          /// LOGIN
           BlocProvider(
             create: (context) => LoginViewModel(
               AuthRepositoryImpl(
@@ -41,6 +49,8 @@ void main() async {
               ),
             ),
           ),
+
+          /// REGISTER
           BlocProvider(
             create: (context) => RegisterViewModel(
               AuthRepositoryImpl(
@@ -48,6 +58,8 @@ void main() async {
               ),
             ),
           ),
+
+          /// RESET PASSWORD
           BlocProvider(
             create: (context) => ResetViewModel(
               AuthRepositoryImpl(
@@ -55,7 +67,14 @@ void main() async {
               ),
             ),
           ),
+
+          /// MOVIE SUGGEST
+          BlocProvider(
+            create: (context) =>
+                MovieSuggestCubit(MovieRepository())..getMovies(),
+          ),
         ],
+
         child: const MyApp(),
       ),
     ),
@@ -72,23 +91,32 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'cineluxe',
+      title: 'CineLuxe',
+
       debugShowCheckedModeBanner: false,
 
-      // هنا بنخلي التطبيق يفتح على الليوت الجديد اللي فيه البوتوم نافيجيتور
-      initialRoute: AppRoutes.homeScreen,
+      /// IMPORTANT
+      home: const MainLayout(),
 
       localizationsDelegates: context.localizationDelegates,
+
       supportedLocales: context.supportedLocales,
+
       locale: context.locale,
 
       routes: {
         AppRoutes.loginScreen: (context) => const Login(),
+
         AppRoutes.forgetPasswordScreen: (context) => const ForgetPassword(),
+
         AppRoutes.registerScreen: (context) => const Register(),
+
         AppRoutes.splashScreen: (context) => const SplashScreen(),
+
         AppRoutes.onboardingScreen: (context) => const OnBoardingPage(),
+
         AppRoutes.updateProfileScreen: (context) => UpdateProfileScreen(),
+
         AppRoutes.homeScreen: (context) => const MainLayout(),
       },
     );
