@@ -1,13 +1,11 @@
-import 'package:cineluxe/models/movie_response.dart';
-
 class UserModel {
   String? id;
   String? name;
   String? email;
   String? phone;
   String? avatar;
-  List<Movies>? isWatchlist;
-  List<Movies>? isHistory;
+  bool? isWatchlist;
+  bool? isHistory;
 
   UserModel({
     this.id,
