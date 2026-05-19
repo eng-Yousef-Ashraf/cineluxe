@@ -2,6 +2,7 @@ import 'package:cineluxe/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:cineluxe/screens/login_screen/ui/login.dart';
 
+import '../../prefs/is_seen.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_sizes.dart';
 import '../../widgets/customized_elevated_button.dart';
@@ -151,8 +152,10 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                       SizedBox(
                         width: double.infinity,
                         child: CustomizedElevatedButton(
-                          onPressed: () {
+                          onPressed: () async{
                             if (isLast) {
+                              await IsSeen().setSeen(true);
+                              if (!mounted) return;
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -172,7 +175,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                                 : isLast
                                 ? "Finish"
                                 : "Next",
-                            style: AppStyles.black20Bold
+                            style: AppStyles.black20Bold,
                           ),
                         ),
                       ),
@@ -190,10 +193,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                                 curve: Curves.easeInOut,
                               );
                             },
-                            child: Text(
-                              "Back",
-                              style: AppStyles.yellow20Bold
-                            ),
+                            child: Text("Back", style: AppStyles.yellow20Bold),
                           ),
                         ),
                       ],

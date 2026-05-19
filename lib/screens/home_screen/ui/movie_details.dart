@@ -98,12 +98,12 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                 Navigator.pop(context);
                               },
                               icon: Icon(Icons.arrow_back_ios),
-                              color: Colors.white,
+                              color: AppColors.yellowColor,
                               iconSize: 30,
                             ),
                             IconButton(
                               onPressed: () {},
-                              icon: Icon(Icons.bookmark, color: Colors.white),
+                              icon: Icon(Icons.bookmark_border_outlined, color: AppColors.yellowColor),
                               iconSize: 30,
                             ),
                           ],

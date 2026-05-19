@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/repository/movie_list/repository/movie_repository.dart';
 import '../../../models/movie_response.dart';
-import '../../../models/movie_datails_response.dart';
+import '../../../models/movie_details_response.dart';
 import 'movie_states/movie_states.dart';
 
 class MovieCubit extends Cubit<MovieState> {

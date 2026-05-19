@@ -1,5 +1,6 @@
 import 'package:cineluxe/widgets/customized_elevated_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -160,6 +161,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                           backgroundColor: AppColors.redColor,
                             paddingHeight: 0.02,
                             onPressed: (){
+                            FirebaseAuth.instance.signOut();
                             Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
                             }, child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

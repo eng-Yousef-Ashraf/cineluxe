@@ -2,6 +2,8 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:cineluxe/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/services/app_startup_service.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -93,12 +95,12 @@ class _SplashScreenState extends State<SplashScreen>
     });
 
     //  Navigation
-    Future.delayed(const Duration(milliseconds: 1800), () {
-      if (!mounted) return;
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const OnBoardingPage()),
-      );
+    Future.delayed(const Duration(milliseconds: 1800), () async {
+
+    if (!mounted) return;
+
+    await AppStartupService.handleStartup(context);
+
     });
   }
 
