@@ -1,11 +1,13 @@
+import 'movie_response.dart';
+
 class UserModel {
   String? id;
   String? name;
   String? email;
   String? phone;
   String? avatar;
-  bool? isWatchlist;
-  bool? isHistory;
+  List<Movies>? watchlist;
+  List<Movies>? history;
 
   UserModel({
     this.id,
@@ -13,8 +15,8 @@ class UserModel {
     this.email,
     this.phone,
     this.avatar,
-    this.isWatchlist,
-    this.isHistory,
+    this.watchlist,
+    this.history,
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -23,8 +25,17 @@ class UserModel {
     email = json['email'];
     phone = json['phone'];
     avatar = json['avatar'];
-    isWatchlist = json['isWatchlist'];
-    isHistory = json['isHistory'];
+    watchlist = json['watchlist'] != null
+        ? (json['watchlist'] as List)
+        .map((e) => Movies.fromJson(e))
+        .toList()
+        : [];
+
+    history = json['history'] != null
+        ? (json['history'] as List)
+        .map((e) => Movies.fromJson(e))
+        .toList()
+        : [];
   }
 
   Map<String, dynamic> toJson() {
@@ -34,8 +45,8 @@ class UserModel {
       'email': email,
       'phone': phone,
       'avatar': avatar,
-      'isWatchlist': isWatchlist,
-      'isHistory': isHistory,
+      'watchlist': watchlist?.map((e) => e.toJson()).toList(),
+      'history': history?.map((e) => e.toJson()).toList(),
     };
   }
 }

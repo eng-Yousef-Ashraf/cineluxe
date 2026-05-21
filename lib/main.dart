@@ -9,8 +9,10 @@ import 'package:cineluxe/screens/register_screen/logic/register_view_model.dart'
 import 'package:cineluxe/screens/register_screen/ui/register.dart';
 import 'package:cineluxe/screens/search_screen/ui/search_screen.dart';
 import 'package:cineluxe/screens/splash/splash_screen.dart';
+import 'package:cineluxe/screens/update_profile_screen/logic/update_profile_view_model.dart';
 import 'package:cineluxe/screens/update_profile_screen/ui/Profile.dart';
 import 'package:cineluxe/utils/app_routes.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,6 +22,8 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'data/repository/auth/data_sources/remote/impl/auth_remote_data_source_impl.dart';
 import 'data/repository/auth/repository/impl/auth_repository_impl.dart';
+import 'data/repository/firestore/data_sources/remote/impl/user_remote_data_source_impl.dart';
+import 'data/repository/firestore/repository/impl/user_repository_impl.dart';
 import 'data/repository/movie_list/data_source/impl/movie_remote_data_souce_impl.dart';
 import 'data/repository/movie_list/repository/impl/movie_repository_impl.dart';
 import 'firebase_options.dart';
@@ -66,6 +70,10 @@ void main() async {
               ),
             ),
           ),
+          BlocProvider(
+            create: (context) => UserCubit(
+              UserRepositoryImpl(
+                UserRemoteDataSourceImpl(FirebaseFirestore.instance), ), )..loadUser(), ),
         ],
         child: const MyApp(),
       ),

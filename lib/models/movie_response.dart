@@ -150,6 +150,49 @@ class Movies {
     dateUploaded = json['date_uploaded'];
     dateUploadedUnix = json['date_uploaded_unix'];
   }
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'url': url,
+      'imdb_code': imdbCode,
+      'title': title,
+      'title_english': titleEnglish,
+      'title_long': titleLong,
+      'slug': slug,
+      'year': year,
+      'rating': rating,
+      'runtime': runtime,
+      'genres': genres,
+      'summary': summary,
+      'description_full': descriptionFull,
+      'synopsis': synopsis,
+      'yt_trailer_code': ytTrailerCode,
+      'language': language,
+      'mpa_rating': mpaRating,
+      'background_image': backgroundImage,
+      'background_image_original': backgroundImageOriginal,
+      'small_cover_image': smallCoverImage,
+      'medium_cover_image': mediumCoverImage,
+      'large_cover_image': largeCoverImage,
+      'state': state,
+
+      'large_screenshot_image1':
+      screenshots.isNotEmpty ? screenshots[0] : null,
+
+      'large_screenshot_image2':
+      screenshots.length > 1 ? screenshots[1] : null,
+
+      'large_screenshot_image3':
+      screenshots.length > 2 ? screenshots[2] : null,
+
+      'cast': cast?.map((e) => e.toJson()).toList(),
+
+      'torrents': torrents?.map((e) => e.toJson()).toList(),
+
+      'date_uploaded': dateUploaded,
+      'date_uploaded_unix': dateUploadedUnix,
+    };
+  }
 }
 
 class Torrents {
@@ -191,6 +234,24 @@ class Torrents {
     dateUploaded = json['date_uploaded'];
     dateUploadedUnix = json['date_uploaded_unix'];
   }
+  Map<String, dynamic> toJson() {
+    return {
+      'url': url,
+      'hash': hash,
+      'quality': quality,
+      'type': type,
+      'is_repack': isRepack,
+      'video_codec': videoCodec,
+      'bit_depth': bitDepth,
+      'audio_channels': audioChannels,
+      'seeds': seeds,
+      'peers': peers,
+      'size': size,
+      'size_bytes': sizeBytes,
+      'date_uploaded': dateUploaded,
+      'date_uploaded_unix': dateUploadedUnix,
+    };
+  }
 }
 
 
@@ -212,5 +273,13 @@ class Cast {
     characterName = json['character_name'];
     urlSmallImage = json['url_small_image'];
     imdbCode = json['imdb_code'];
+  }
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'character_name': characterName,
+      'url_small_image': urlSmallImage,
+      'imdb_code': imdbCode,
+    };
   }
 }

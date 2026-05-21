@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../utils/app_sizes.dart';
+import '../../update_profile_screen/logic/update_profile_view_model.dart';
 import '../logic/movie_states/movie_states.dart';
 import '../logic/movie_view_model.dart';
 import 'movie_details.dart';
@@ -18,7 +19,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int currentIndex=0;
+  int currentIndex = 0;
+  @override
+  void initState() {
+    super.initState();
+    context.read<UserCubit>().loadUser();
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenHeight = context.height;
@@ -29,7 +36,6 @@ class _HomeState extends State<Home> {
         children: [
           BlocBuilder<MovieCubit, MovieState>(
             builder: (context, state) {
-
               final movies = context.read<MovieCubit>().latestMovies ?? [];
 
               String? image;
@@ -39,9 +45,7 @@ class _HomeState extends State<Home> {
               }
 
               if (image == null || image.isEmpty) {
-                return Container(
-                  color: Colors.black,
-                );
+                return Container(color: Colors.black);
               }
 
               return Positioned.fill(
@@ -51,20 +55,11 @@ class _HomeState extends State<Home> {
                     key: ValueKey(image),
                     fit: StackFit.expand,
                     children: [
-
-                      Image.network(
-                        image,
-                        fit: BoxFit.cover,
-                      ),
+                      Image.network(image, fit: BoxFit.cover),
 
                       BackdropFilter(
-                        filter: ImageFilter.blur(
-                          sigmaX: 15,
-                          sigmaY: 15,
-                        ),
-                        child: Container(
-                          color: Colors.black.withOpacity(0.5),
-                        ),
+                        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                        child: Container(color: Colors.black.withOpacity(0.5)),
                       ),
                     ],
                   ),
@@ -160,8 +155,11 @@ class _HomeState extends State<Home> {
                             horizontal: screenWidth * 0.04,
                           ),
                           itemCount: movies.length,
-                          itemBuilder: (context, index) =>
-                              _buildListItem(movies[index], screenWidth, context),
+                          itemBuilder: (context, index) => _buildListItem(
+                            movies[index],
+                            screenWidth,
+                            context,
+                          ),
                         ),
                       );
                     },
@@ -186,67 +184,64 @@ class _HomeState extends State<Home> {
     ),
   );
 
-  Widget _buildCarouselItem(Movies movie,BuildContext context) => GestureDetector(
-    onTap: () {
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => MovieDetailsScreen(
-            movieId: movie.id ?? 0,
-          ),
-        ),
-      );
-
-    },
-    child: Stack(
-      children: [
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 5),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            image: DecorationImage(
-              image: NetworkImage(movie.mediumCoverImage ?? ''),
-              fit: BoxFit.cover,
+  Widget _buildCarouselItem(Movies movie, BuildContext context) =>
+      GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => MovieDetailsScreen(movieId: movie.id ?? 0),
             ),
-          ),
-        ),
-        Positioned(
-          top: 15,
-          left: 15,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.6),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              children: [
-                Text(
-                  movie.rating?.toString() ?? '0',
-                  style: const TextStyle(color: Colors.white),
+          );
+        },
+        child: Stack(
+          children: [
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                image: DecorationImage(
+                  image: NetworkImage(movie.mediumCoverImage ?? ''),
+                  fit: BoxFit.cover,
                 ),
-                const Icon(Icons.star, color: Colors.amber, size: 16),
-              ],
+              ),
             ),
-          ),
-        ),
-      ],
-    ),
-  );
-
-  Widget _buildListItem(Movies movie, double screenWidth,BuildContext context) => GestureDetector(
-    onTap: () {
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => MovieDetailsScreen(
-            movieId: movie.id ?? 0,
-          ),
+            Positioned(
+              top: 15,
+              left: 15,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.6),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      movie.rating?.toString() ?? '0',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    const Icon(Icons.star, color: Colors.amber, size: 16),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       );
 
+  Widget _buildListItem(
+    Movies movie,
+    double screenWidth,
+    BuildContext context,
+  ) => GestureDetector(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => MovieDetailsScreen(movieId: movie.id ?? 0),
+        ),
+      );
     },
     child: Container(
       width: screenWidth * 0.3,
