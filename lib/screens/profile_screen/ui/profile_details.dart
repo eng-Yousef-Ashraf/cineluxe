@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-
 import '../../../utils/app_assets.dart';
 import '../../../utils/app_colors.dart';
 import '../../../utils/app_routes.dart';
@@ -66,7 +65,10 @@ class _ProfileDetailsState extends State<ProfileDetails> {
           },
           builder: (context, state) {
             if (state is UserLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: LoadingAnimationWidget.staggeredDotsWave(
+                color: AppColors.yellowColor,
+                size: 50,
+              ),);
             }
 
             if (state is UserError) {
@@ -88,217 +90,363 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                 child: NestedScrollView(
                   headerSliverBuilder: (context, innerBoxIsScrolled) {
                     return [
-                      SliverAppBar(
-                        expandedHeight: height * 0.40,
-                        pinned: true,
-                        backgroundColor:
-                        const Color(0xFF282A28).withValues(alpha: 0.95),
-
-                        flexibleSpace: FlexibleSpaceBar(
-                          background: Column(
-                            children: [
-                              SizedBox(height: height * 0.06),
-
-                              // ================= HEADER (نفس تصميمك) =================
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: width * 0.04),
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        Container(
-                                          width: width * 0.28,
-                                          height: width * 0.28,
-                                          decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: ClipOval(
-                                            child: avatar.isNotEmpty
-                                                ? Image.asset(
-                                              UpdateProfileFunctions
-                                                  .getAvatarPath(
-                                                  avatar),
-                                              fit: BoxFit.cover,
-                                            )
-                                                : const Icon(
-                                              Icons.person,
-                                              color: Colors.white,
+                      SliverOverlapAbsorber(
+                        handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                        sliver: SliverAppBar(
+                          expandedHeight: height * 0.40,
+                          pinned: true,
+                          backgroundColor:
+                          const Color(0xFF282A28).withValues(alpha: 0.95),
+                        
+                          flexibleSpace: FlexibleSpaceBar(
+                            background: Column(
+                              children: [
+                                SizedBox(height: height * 0.06),
+                        
+                                // ================= HEADER (نفس تصميمك) =================
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: width * 0.04),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Container(
+                                            width: width * 0.28,
+                                            height: width * 0.28,
+                                            decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
                                             ),
-                                          ),
-                                        ),
-                                        Text(
-                                          name,
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20),
-                                        ),
-                                      ],
-                                    ),
-
-                                    Column(
-                                      children: [
-                                        Text(
-                                          '${watchlist.length}',
-                                          style: GoogleFonts.roboto(
-                                            fontSize: 36,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        Text(
-                                          'Watchlist',
-                                          style: GoogleFonts.roboto(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-
-                                    Column(
-                                      children: [
-                                        Text(
-                                          '${history.length}',
-                                          style: GoogleFonts.roboto(
-                                            fontSize: 36,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        Text(
-                                          'History',
-                                          style: GoogleFonts.roboto(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-
-                              SizedBox(height: height * 0.02),
-
-                              // ================= BUTTONS =================
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: width * 0.04),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 2,
-                                      child: CustomizedElevatedButton(
-                                        paddingHeight: 0.02,
-                                        onPressed: () async {
-                                          await Navigator.pushNamed(
-                                            context,
-                                            AppRoutes.updateProfileScreen,
-                                          );
-                                          context.read<UserCubit>().loadUser();
-                                        },
-                                        child: Text(
-                                          'Edit Profile',
-                                          style: GoogleFonts.roboto(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w500,
-                                            color: AppColors.bgColor,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-
-                                    SizedBox(width: width * 0.02),
-
-                                    Expanded(
-                                      flex: 1,
-                                      child: CustomizedElevatedButton(
-                                        backgroundColor: AppColors.redColor,
-                                        paddingHeight: 0.02,
-                                        onPressed: () {
-                                          FirebaseAuth.instance.signOut();
-                                          Navigator.pushReplacementNamed(
-                                            context,
-                                            AppRoutes.loginScreen,
-                                          );
-                                        },
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Exit',
-                                              style: GoogleFonts.roboto(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w500,
+                                            child: ClipOval(
+                                              child: avatar.isNotEmpty
+                                                  ? Image.asset(
+                                                UpdateProfileFunctions
+                                                    .getAvatarPath(
+                                                    avatar),
+                                                fit: BoxFit.cover,
+                                              )
+                                                  : const Icon(
+                                                Icons.person,
                                                 color: Colors.white,
                                               ),
                                             ),
-                                            SizedBox(width: width * 0.02),
-                                            Icon(Icons.logout, color: Colors.white),
-                                          ],
+                                          ),
+                                          Text(
+                                            name,
+                                            style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20),
+                                          ),
+                                        ],
+                                      ),
+                        
+                                      Column(
+                                        children: [
+                                          Text(
+                                            '${watchlist.length}',
+                                            style: GoogleFonts.roboto(
+                                              fontSize: 36,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Watchlist',
+                                            style: GoogleFonts.roboto(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                        
+                                      Column(
+                                        children: [
+                                          Text(
+                                            '${history.length}',
+                                            style: GoogleFonts.roboto(
+                                              fontSize: 36,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          Text(
+                                            'History',
+                                            style: GoogleFonts.roboto(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                        
+                                SizedBox(height: height * 0.02),
+                        
+                                // ================= BUTTONS =================
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: width * 0.04),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 2,
+                                        child: CustomizedElevatedButton(
+                                          paddingHeight: 0.02,
+                                          onPressed: () async {
+                                            await Navigator.pushNamed(
+                                              context,
+                                              AppRoutes.updateProfileScreen,
+                                            );
+                                            context.read<UserCubit>().loadUser();
+                                          },
+                                          child: Text(
+                                            'Edit Profile',
+                                            style: GoogleFonts.roboto(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.bgColor,
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                )
-                              ),
-                            ],
+                        
+                                      SizedBox(width: width * 0.02),
+                        
+                                      Expanded(
+                                        flex: 1,
+                                        child: CustomizedElevatedButton(
+                                          backgroundColor: AppColors.redColor,
+                                          paddingHeight: 0.02,
+                                          onPressed: () {
+                                            FirebaseAuth.instance.signOut();
+                                            Navigator.pushReplacementNamed(
+                                              context,
+                                              AppRoutes.loginScreen,
+                                            );
+                                          },
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Exit',
+                                                style: GoogleFonts.roboto(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              SizedBox(width: width * 0.02),
+                                              Icon(Icons.logout, color: Colors.white),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-
-                        bottom: TabBar(
-                          dividerColor: Colors.transparent,
-                          indicatorColor: AppColors.yellowColor,
-                          tabs: twoTabs,
+                        
+                          bottom: TabBar(
+                            dividerColor: Colors.transparent,
+                            indicatorColor: AppColors.yellowColor,
+                            indicatorSize: TabBarIndicatorSize.tab,
+                            tabs: twoTabs,
+                          ),
                         ),
                       ),
                     ];
                   },
 
                   // ================= TAB CONTENT =================
-                  body: TabBarView(
-                    children: [
-                      watchlist.isEmpty
-                          ? Center(
-                        child: Image.asset(AppAssets.popcorn),
-                      )
-                          : ListView.separated(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: width * 0.04,
-                            vertical: height * 0.02),
-                        itemCount: watchlist.length,
-                        separatorBuilder: (_, __) =>
-                            SizedBox(height: height * 0.02),
-                        itemBuilder: (context, index) {
-                          final movie = watchlist[index];
+                  body: Builder(
+                    builder: (context)=>TabBarView(
+                      children: [
+                        Container(
+                          color: AppColors.bgColor,
+                          child: watchlist.isEmpty
+                              ? Center(
+                            child: Image.asset(AppAssets.popcorn),
+                          )
+                              : CustomScrollView(
+                            slivers: [
 
-                          return _movieItem(movie, width, height);
-                        },
-                      ),
+                              SliverOverlapInjector(
+                                handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                              ),
 
-                      history.isEmpty
-                          ? Center(
-                        child: Image.asset(AppAssets.popcorn),
-                      )
-                          : ListView.separated(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: width * 0.04,
-                            vertical: height * 0.02),
-                        itemCount: history.length,
-                        separatorBuilder: (_, __) =>
-                            SizedBox(height: height * 0.02),
-                        itemBuilder: (context, index) {
-                          final movie = history[index];
+                              SliverPadding(
+                                padding: EdgeInsets.only(
+                                  top: height * 0.02,
+                                  left: width * 0.04,
+                                  right: width * 0.04,
+                                  bottom: height * 0.02,
+                                ),
 
-                          return _movieItem(movie, width, height);
-                        },
-                      ),
-                    ],
+                                sliver: SliverGrid(
+                                  delegate: SliverChildBuilderDelegate(
+                                        (context, index) {
+                                      final movie = watchlist[index];
+
+                                      return Stack(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(16),
+                                            child: Image.network(
+                                              movie.mediumCoverImage ?? '',
+                                              fit: BoxFit.cover,
+                                              width: double.infinity,
+                                              height: double.infinity,
+                                            ),
+                                          ),
+
+                                          Positioned(
+                                            top: 8,
+                                            left: 8,
+                                            child: Container(
+                                              padding: const EdgeInsets.symmetric(
+                                                horizontal: 8,
+                                                vertical: 4,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color: Colors.black.withValues(alpha: 0.7),
+                                                borderRadius: BorderRadius.circular(12),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    '${movie.rating}',
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 3),
+                                                  const Icon(
+                                                    Icons.star,
+                                                    color: Colors.yellow,
+                                                    size: 16,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+
+                                    childCount: watchlist.length,
+                                  ),
+
+                                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                    crossAxisSpacing: width * 0.03,
+                                    mainAxisSpacing: height * 0.02,
+                                    childAspectRatio: 0.62,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ),
+
+                        Container(
+                          color: AppColors.bgColor,
+                          child: history.isEmpty
+                              ? Center(
+                            child: Image.asset(AppAssets.popcorn),
+                          )
+                              : CustomScrollView(
+                            slivers: [
+
+                              SliverOverlapInjector(
+                                handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                              ),
+
+                              SliverPadding(
+                                padding: EdgeInsets.only(
+                                  top: height * 0.02,
+                                  left: width * 0.04,
+                                  right: width * 0.04,
+                                  bottom: height * 0.02,
+                                ),
+
+                                sliver: SliverGrid(
+                                  delegate: SliverChildBuilderDelegate(
+                                        (context, index) {
+                                      final movie = history[index];
+
+                                      return Stack(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(16),
+                                            child: Image.network(
+                                              movie.mediumCoverImage ?? '',
+                                              fit: BoxFit.cover,
+                                              width: double.infinity,
+                                              height: double.infinity,
+                                            ),
+                                          ),
+
+                                          Positioned(
+                                            top: 8,
+                                            left: 8,
+                                            child: Container(
+                                              padding: const EdgeInsets.symmetric(
+                                                horizontal: 8,
+                                                vertical: 4,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color: Colors.black.withValues(alpha: 0.7),
+                                                borderRadius: BorderRadius.circular(12),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    '${movie.rating}',
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 3),
+                                                  const Icon(
+                                                    Icons.star,
+                                                    color: Colors.yellow,
+                                                    size: 16,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+
+                                    childCount: watchlist.length,
+                                  ),
+
+                                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                    crossAxisSpacing: width * 0.03,
+                                    mainAxisSpacing: height * 0.02,
+                                    childAspectRatio: 0.62,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );
@@ -307,70 +455,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
             return const SizedBox();
           },
         ),
-      ),
-    );
-  }
-
-  Widget _movieItem(dynamic movie, double width, double height) {
-    return Container(
-      height: height * 0.18,
-      decoration: BoxDecoration(
-        color: const Color(0xFF1F1F1F),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.network(
-              movie.mediumCoverImage ?? '',
-              width: width * 0.32,
-              height: double.infinity,
-              fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => Container(
-                width: width * 0.32,
-                color: Colors.grey,
-                child: const Icon(Icons.broken_image, color: Colors.white),
-              ),
-            ),
-          ),
-          SizedBox(width: width * 0.04),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: height * 0.015),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    movie.title ?? '',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '${movie.year}',
-                    style: const TextStyle(color: Colors.grey),
-                  ),
-                  Row(
-                    children: [
-                      const Icon(Icons.star,
-                          color: Colors.yellow, size: 20),
-                      SizedBox(width: width * 0.01),
-                      Text(
-                        '${movie.rating}',
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

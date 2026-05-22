@@ -59,13 +59,16 @@ class _SearchScreenState extends State<SearchScreen> {
 
             /// BODY
             Expanded(
-              child: BlocBuilder<SearchViewModel, SearchStates>(
+              child: BlocConsumer<SearchViewModel, SearchStates>(
+                listener: (context, state) {
+                  if (state is SearchMoviesInitialState) {
+                    _controller.clear();
+                  }
+                },
                 builder: (context, state) {
 
                   /// RESET / INITIAL
                   if (state is SearchMoviesInitialState) {
-                    _controller.clear();
-
                     return Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
