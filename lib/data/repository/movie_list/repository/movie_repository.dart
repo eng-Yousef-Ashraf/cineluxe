@@ -13,5 +13,7 @@ abstract class MovieRepository {
       int movieId,
       );
 
+  Future<MovieResponse> searchMovies(String query);
+
 
 }

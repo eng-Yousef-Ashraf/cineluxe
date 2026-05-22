@@ -15,4 +15,6 @@ abstract class MovieRemoteDataSource {
       int movieId,
       );
 
+  Future<Response> searchMovies(String query);
+
 }

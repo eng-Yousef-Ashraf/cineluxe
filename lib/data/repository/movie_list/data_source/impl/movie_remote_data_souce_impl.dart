@@ -52,4 +52,16 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
     );
   }
 
+  @override
+  Future<Response> searchMovies(String query) async {
+
+    return await DioManager.dio.get(
+      EndPoints.moviesApi,
+
+      queryParameters: {
+        'query_term': query,
+      },
+    );
+  }
+
 }

@@ -1,3 +1,5 @@
+import 'package:cineluxe/screens/browse_screen/logic/browse_view_model.dart';
+import 'package:cineluxe/screens/browse_screen/ui/browse.dart';
 import 'package:cineluxe/screens/forget_password_screen/logic/reset_view_model.dart';
 import 'package:cineluxe/screens/forget_password_screen/ui/forget_password.dart';
 import 'package:cineluxe/screens/home_screen/logic/movie_view_model.dart';
@@ -7,6 +9,7 @@ import 'package:cineluxe/screens/main_layout/main_layout.dart';
 import 'package:cineluxe/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:cineluxe/screens/register_screen/logic/register_view_model.dart';
 import 'package:cineluxe/screens/register_screen/ui/register.dart';
+import 'package:cineluxe/screens/search_screen/logic/search_view_model.dart';
 import 'package:cineluxe/screens/search_screen/ui/search_screen.dart';
 import 'package:cineluxe/screens/splash/splash_screen.dart';
 import 'package:cineluxe/screens/update_profile_screen/logic/update_profile_view_model.dart';
@@ -74,6 +77,29 @@ void main() async {
             create: (context) => UserCubit(
               UserRepositoryImpl(
                 UserRemoteDataSourceImpl(FirebaseFirestore.instance), ), )..loadUser(), ),
+
+
+          BlocProvider(
+            create: (context) => SearchViewModel(
+              MovieRepositoryImpl(
+                MovieRemoteDataSourceImpl(),
+              ),
+            ),
+          ),
+
+          BlocProvider(
+
+            create: (context) => BrowseViewModel(
+
+              MovieRepositoryImpl(
+                MovieRemoteDataSourceImpl(),
+              ),
+
+            )..getBrowseData(),
+
+            child: const Browse(),
+          )
+
         ],
         child: const MyApp(),
       ),

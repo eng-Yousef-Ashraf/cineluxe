@@ -55,4 +55,13 @@ class MovieRepositoryImpl implements MovieRepository {
         .toList();
   }
 
+  @override
+  Future<MovieResponse> searchMovies(String query) async {
+
+    final response =
+    await movieRemoteDataSource.searchMovies(query);
+
+    return MovieResponse.fromJson(response.data);
+  }
+
 }
