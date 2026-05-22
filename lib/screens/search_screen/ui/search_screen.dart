@@ -10,8 +10,21 @@ import '../../../utils/app_colors.dart';
 import '../../../utils/app_sizes.dart';
 import '../../home_screen/ui/movie_details.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
+
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +44,7 @@ class SearchScreen extends StatelessWidget {
                 vertical: height * 0.02,
               ),
               child: CustomizedTextFormField(
+                controller: _controller,
                 textInputAction: TextInputAction.search,
                 hintText: 'Search',
                 prefixIcon: Image.asset(
@@ -48,6 +62,25 @@ class SearchScreen extends StatelessWidget {
               child: BlocBuilder<SearchViewModel, SearchStates>(
                 builder: (context, state) {
 
+                  /// RESET / INITIAL
+                  if (state is SearchMoviesInitialState) {
+                    _controller.clear();
+
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(AppAssets.popcorn),
+                          const SizedBox(height: 10),
+                          const Text(
+                            "Search for movies",
+                            style: TextStyle(color: Colors.white70),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+
                   /// LOADING
                   if (state is SearchMoviesLoadingState) {
                     return Center(
@@ -62,7 +95,6 @@ class SearchScreen extends StatelessWidget {
                   if (state is SearchMoviesSuccessState) {
                     final movies = state.movies;
 
-                    /// EMPTY RESULT
                     if (movies.isEmpty) {
                       return const Center(
                         child: Text(
@@ -72,11 +104,8 @@ class SearchScreen extends StatelessWidget {
                       );
                     }
 
-                    /// GRID VIEW
                     return Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: width * 0.04,
-                      ),
+                      padding: EdgeInsets.symmetric(horizontal: width * 0.04),
                       child: GridView.builder(
                         itemCount: movies.length,
                         gridDelegate:
@@ -106,64 +135,19 @@ class SearchScreen extends StatelessWidget {
 
                                 /// IMAGE
                                 Expanded(
-                                  child: Stack(
-                                    children: [
-
-                                      ClipRRect(
-                                        borderRadius:
-                                        BorderRadius.circular(16),
-                                        child: Image.network(
-                                          movie.mediumCoverImage ?? '',
-                                          width: double.infinity,
-                                          height: double.infinity,
-                                          fit: BoxFit.cover,
-                                          errorBuilder: (_, __, ___) {
-                                            return Container(
-                                              color: Colors.grey,
-                                              child: const Icon(
-                                                Icons.broken_image,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-
-                                      /// RATING
-                                      Positioned(
-                                        top: 8,
-                                        left: 8,
-                                        child: Container(
-                                          padding:
-                                          const EdgeInsets.symmetric(
-                                            horizontal: 8,
-                                            vertical: 4,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: Colors.black54,
-                                            borderRadius:
-                                            BorderRadius.circular(12),
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                movie.rating?.toString() ??
-                                                    '',
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12,
-                                                ),
-                                              ),
-                                              const SizedBox(width: 4),
-                                              const Icon(
-                                                Icons.star,
-                                                color: Colors.yellow,
-                                                size: 14,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(16),
+                                    child: Image.network(
+                                      movie.mediumCoverImage ?? '',
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (_, __, ___) {
+                                        return Container(
+                                          color: Colors.grey,
+                                          child: const Icon(Icons.broken_image),
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
 
@@ -186,20 +170,17 @@ class SearchScreen extends StatelessWidget {
                     );
                   }
 
-                  /// INITIAL STATE
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(AppAssets.popcorn),
-                        const SizedBox(height: 10),
-                        const Text(
-                          "Search for movies",
-                          style: TextStyle(color: Colors.white70),
-                        ),
-                      ],
-                    ),
-                  );
+                  /// ERROR
+                  if (state is SearchMoviesErrorState) {
+                    return Center(
+                      child: Text(
+                        state.error,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    );
+                  }
+
+                  return const SizedBox();
                 },
               ),
             ),

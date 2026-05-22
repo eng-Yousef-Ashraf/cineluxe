@@ -21,6 +21,7 @@ class Browse extends StatelessWidget {
 
     return BlocBuilder<BrowseViewModel, BrowseStates>(
       builder: (context, state) {
+
         if (state is BrowseLoadingState) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
@@ -29,7 +30,12 @@ class Browse extends StatelessWidget {
 
         if (state is BrowseErrorState) {
           return Scaffold(
-            body: Center(child: Text(state.error)),
+            body: Center(
+              child: Text(
+                state.error,
+                style: AppStyles.white16W400,
+              ),
+            ),
           );
         }
 
@@ -37,6 +43,7 @@ class Browse extends StatelessWidget {
 
         return Scaffold(
           backgroundColor: AppColors.bgColor,
+
           body: SafeArea(
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -52,10 +59,11 @@ class Browse extends StatelessWidget {
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemCount: vm.genres.length,
-                      separatorBuilder: (context, index) {
-                        return SizedBox(width: width * 0.02);
-                      },
+                      separatorBuilder: (_, __) =>
+                          SizedBox(width: width * 0.02),
                       itemBuilder: (context, index) {
+                        final isSelected = vm.selectedIndex == index;
+
                         return InkWell(
                           onTap: () {
                             vm.changeSelectedIndex(index);
@@ -67,9 +75,12 @@ class Browse extends StatelessWidget {
                             ),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(16),
-                              color: vm.selectedIndex == index
+
+                              ///  COLOR STYLE RESTORED
+                              color: isSelected
                                   ? AppColors.yellowColor
                                   : AppColors.blackColor,
+
                               border: Border.all(
                                 color: AppColors.yellowColor,
                                 width: 2,
@@ -77,9 +88,15 @@ class Browse extends StatelessWidget {
                             ),
                             child: Text(
                               vm.genres[index],
-                              style: vm.selectedIndex == index
-                                  ? AppStyles.black20bold.copyWith(fontSize: 16)
-                                  : AppStyles.yellow20bold.copyWith(fontSize: 16),
+
+                              ///  TEXT STYLE RESTORED
+                              style: isSelected
+                                  ? AppStyles.black20bold.copyWith(
+                                fontSize: 16,
+                              )
+                                  : AppStyles.yellow20bold.copyWith(
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         );
@@ -140,9 +157,7 @@ class Browse extends StatelessWidget {
                                     vertical: 4,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Colors.black.withValues(
-                                      alpha: 0.6,
-                                    ),
+                                    color: Colors.black.withOpacity(0.6),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Row(
@@ -154,6 +169,7 @@ class Browse extends StatelessWidget {
                                           color: Colors.white,
                                         ),
                                       ),
+                                      const SizedBox(width: 4),
                                       const Icon(
                                         Icons.star,
                                         color: Colors.amber,

@@ -75,4 +75,8 @@ class BrowseViewModel extends Cubit<BrowseStates> {
 
     emit(BrowseSuccessState());
   }
+  void resetBrowse() {
+    selectedIndex = 0;
+    emit(BrowseInitialState());
+  }
 }

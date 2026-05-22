@@ -8,8 +8,9 @@ import 'package:cineluxe/screens/profile_screen/ui/profile_details.dart';
 
 import '../../utils/app_assets.dart';
 import '../../utils/app_colors.dart';
-import '../../utils/app_sizes.dart';
 import '../home_screen/logic/movie_view_model.dart';
+import '../search_screen/logic/search_view_model.dart';
+import '../browse_screen/logic/browse_view_model.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -19,7 +20,6 @@ class MainLayout extends StatefulWidget {
 }
 
 class _MainLayoutState extends State<MainLayout> {
-
   int _currentIndex = 0;
 
   final List<Widget> _pages = const [
@@ -29,29 +29,33 @@ class _MainLayoutState extends State<MainLayout> {
     ProfileDetails(),
   ];
 
-  final List<String> genres = [
-    "action",
-    "comedy",
-    "horror",
-    "romance",
-  ];
-
   void _onTabChanged(int index) {
+    if (_currentIndex == index) return;
+
+    ///  Search
+    if (_currentIndex == 1) {
+      context.read<SearchViewModel>().resetSearch();
+    }
+
+    ///  Browse
+    if (_currentIndex == 2) {
+      context.read<BrowseViewModel>().resetBrowse();
+    }
+
     setState(() {
       _currentIndex = index;
     });
 
+    ///  refresh Home
     if (index == 0) {
-      // لما يرجع للهوم، يطلب داتا عشوائية للـ List اللي تحت
       context.read<MovieCubit>().getRandomMovies();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
-    var width = context.width;
-    var height = context.height;
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: const Color(0xFF121212),
@@ -67,45 +71,33 @@ class _MainLayoutState extends State<MainLayout> {
           right: width * 0.02,
           bottom: height * 0.01,
         ),
-
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
-
           child: BottomNavigationBar(
             currentIndex: _currentIndex,
             onTap: _onTabChanged,
-
-            elevation: 0,
-            backgroundColor: const Color(0xFF282A28).withOpacity(0.95),
-
             type: BottomNavigationBarType.fixed,
-
+            backgroundColor: const Color(0xFF282A28),
             selectedItemColor: AppColors.yellowColor,
             unselectedItemColor: Colors.grey,
-
             showSelectedLabels: false,
             showUnselectedLabels: false,
-
             items: const [
-
               BottomNavigationBarItem(
                 icon: ImageIcon(AssetImage(AppAssets.homeLogo)),
                 activeIcon: ImageIcon(AssetImage(AppAssets.home1Logo)),
                 label: 'Home',
               ),
-
               BottomNavigationBarItem(
                 icon: ImageIcon(AssetImage(AppAssets.searchLogo)),
                 activeIcon: ImageIcon(AssetImage(AppAssets.search1Logo)),
                 label: 'Search',
               ),
-
               BottomNavigationBarItem(
                 icon: ImageIcon(AssetImage(AppAssets.exploreLogo)),
                 activeIcon: ImageIcon(AssetImage(AppAssets.explore1Logo)),
                 label: 'Browse',
               ),
-
               BottomNavigationBarItem(
                 icon: ImageIcon(AssetImage(AppAssets.profileLogo)),
                 activeIcon: ImageIcon(AssetImage(AppAssets.profile1Logo)),
